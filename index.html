@@ -30,10 +30,19 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset
 .nav a{text-decoration:none;font-weight:700}
 .nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:110px 0 36px;overflow:hidden}
-.hero h1{margin:0;font-size:clamp(5rem,23vw,21rem);line-height:.84}
-.hero h1 span{display:block;white-space:nowrap}
-.hero h1 .a{transform:translateX(calc(var(--p,0)*-14vw))}
-.hero h1 .b{color:var(--acc);transform:translateX(calc(var(--p,0)*14vw))}
+@property --r{syntax:'<length>';inherits:true;initial-value:0px}
+.nmw{position:relative;transform:perspective(1100px) rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg));transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.nmw.on{transition:transform .12s linear}
+.hero .nm{margin:0;font-size:clamp(5rem,23vw,21rem);line-height:.84}
+.hero .nm>span{display:block;white-space:nowrap}
+.hero .nm .a{transform:translateX(calc(var(--p,0)*-14vw))}
+.hero .nm .b{color:var(--acc);transform:translateX(calc(var(--p,0)*14vw))}
+.nm .l{display:inline-block;transform-origin:50% 100%;transform:translateY(calc(var(--l,0)*-.09em)) scale(calc(1 + var(--l,0)*.06),calc(1 + var(--l,0)*.16));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.lens{position:absolute;inset:0;pointer-events:none;background:var(--acc);color:transparent;-webkit-text-stroke:2px var(--bg);--r:0px;clip-path:circle(var(--r) at var(--x,50%) var(--y,50%));transition:--r .55s cubic-bezier(.2,.8,.2,1)}
+.hero .lens .b{color:var(--bg);-webkit-text-stroke:0}
+.nmw.on .lens{--r:clamp(130px,17vw,280px)}
+.nmw.on .lens.boom{--r:150vmax;transition:--r .9s cubic-bezier(.7,0,.2,1)}
+@media (pointer:fine){.nmw{cursor:none}}
 .hero .row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:28px;align-items:flex-end}
 .hero p{max-width:30em;margin:0;font-size:1.2rem}
 .mq{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:14px 0}
@@ -75,15 +84,20 @@ footer{padding:28px 0 40px;color:var(--mute);font-size:.9rem}
 .steps p{margin:0;color:var(--mute)}
 .shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding-bottom:12px}
 .shots figure{margin:0}
-.shots figure:nth-child(2){margin-top:48px}
-.ph{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#1B212B;display:grid;place-items:center;font:500 .85rem var(--mono);color:var(--mute)}
+.shots figure:nth-child(3n+2){margin-top:48px}
+.clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.clips video{display:block;width:100%;max-height:78vh;object-fit:cover;border-radius:8px;background:#1B212B}
+.me{width:100%;max-width:420px;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border-radius:8px;margin-top:32px;display:block;filter:grayscale(1) contrast(1.05);transition:filter .5s}
+.me:hover{filter:none}
+.intro{width:100%;border-radius:8px;margin-top:28px;display:block;background:#1B212B}
+.ph{position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#1B212B;display:grid;place-items:center;font:500 .85rem var(--mono);color:var(--mute)}
 figcaption{margin-top:10px}
 .next{display:block;text-decoration:none;font-size:clamp(2.2rem,7vw,5.5rem);padding:40px 0 60px}
 .next:hover{color:var(--acc)}
 .rv{opacity:0;transform:translateY(36px);transition:opacity .8s,transform .8s}
 .rv.in{opacity:1;transform:none}
-@media (max-width:860px){#list a{grid-template-columns:40px 1fr;gap:6px 14px}#list .d,#list .y{grid-column:2;text-align:left}.about,.ov,.steps,.shots{grid-template-columns:1fr}.shots figure:nth-child(2){margin-top:0}.nav ul{gap:16px}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq div{animation:none}.rv{opacity:1;transform:none;transition:none}#case,#case.on{transition:none}.hero h1 span{transform:none!important}}
+@media (max-width:860px){#list a{grid-template-columns:40px 1fr;gap:6px 14px}#list .d,#list .y{grid-column:2;text-align:left}.about,.ov,.steps,.shots{grid-template-columns:1fr}.shots figure:nth-child(n){margin-top:0}.nav ul{gap:16px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq div{animation:none}.rv{opacity:1;transform:none;transition:none}#case,#case.on{transition:none}.hero .nm>span{transform:none!important}.nmw{transform:none!important}.nm .l{transform:none!important}}
 </style>
 </head>
 <body>
@@ -92,7 +106,10 @@ figcaption{margin-top:10px}
 
 <main id="top">
 <header class="hero"><div class="wrap">
-  <h1 class="disp" id="hero"><span class="a">Cara</span><span class="b">Austring</span></h1>
+  <div class="nmw" id="hero">
+    <h1 class="disp nm" aria-label="Cara Austring"><span class="a">Cara</span><span class="b">Austring</span></h1>
+    <div class="disp nm lens" aria-hidden="true"><span class="a">Cara</span><span class="b">Austring</span></div>
+  </div>
   <div class="row"><p>I design, 3D model, and program things people can touch, and I teach kids to do the same. Freshman at USC. Open to internships.</p><span class="lab">Scroll ↓</span></div>
 </div></header>
 <div class="mq disp" aria-hidden="true"><div id="mq"></div></div>
@@ -103,7 +120,7 @@ figcaption{margin-top:10px}
 </div></section>
 
 <section id="about"><div class="wrap about">
-  <div><h2 class="disp" style="margin:0">About</h2></div>
+  <div><h2 class="disp" style="margin:0">About</h2><img class="me rv" src="images/about/1.jpg" alt="Cara Austring" loading="lazy"></div>
   <div class="rv">
     <pre aria-hidden="true">   .#.
   .###.
@@ -113,6 +130,7 @@ figcaption{margin-top:10px}
     <p>I started Innovation Foundry in 2022 to teach kids 3D printing, and I haven’t stopped making things since: CAD models, microcontroller projects, AR animations, and sets for my school’s plays and musicals.</p>
     <p>I like the space between a working prototype and something people enjoy using.</p>
     <dl class="facts"><dt class="lab">Studying</dt><dd>Business of Innovation, USC Iovine and Young Academy</dd><dt class="lab">Status</dt><dd>Open to internships in product design and automotive engineering</dd><dt class="lab">Tools</dt><dd>OnShape, Spline, Python, ESP32, 3D printing</dd><dt class="lab">Also</dt><dd>TSA Engineering Nationals (hurricane- and flood-resistant hotel prototype), stage crew set designer</dd></dl>
+    <video class="intro" src="images/about/intro.mp4" poster="images/about/intro.jpg" controls playsinline preload="none" aria-label="Intro video"></video>
   </div>
 </div></section>
 
@@ -127,38 +145,56 @@ figcaption{margin-top:10px}
 
 <script>
 const P=[
-{s:'foundry',t:'Innovation Foundry',y:'2022 — now',o:'A 3D printing education business for kids. I built the courses, run the team, and teach most classes.',r:'Founder, curriculum designer, lead instructor',k:'3D printing, curriculum design, hiring and training',st:'Running, managed remotely from USC',w:'A 3D printing and technology education business in Summit, NJ for kids ages 8 to 12. I founded it in August 2022.',
+{s:'foundry',ph:6,v:0,t:'Innovation Foundry',y:'2022 — now',o:'A 3D printing education business for kids. I built the courses, run the team, and teach most classes.',r:'Founder, curriculum designer, lead instructor',k:'3D printing, curriculum design, hiring and training',st:'Running, managed remotely from USC',w:'A 3D printing and technology education business in Summit, NJ for kids ages 8 to 12. I founded it in August 2022.',
  st3:[['Courses','I built out several of the courses and teach most classes on my own. Classes are capped at 12 students.'],['Summer camps','Camps are capped at 15 and have sold out for 9 weeks, mornings and afternoons. I am the lead during camps.'],['Team','I interview, train, and schedule 1 full-time employee and 12 seasonal summer staff. I now work remotely from USC while my brother runs the main role.']],
  res:'About 275 unique customers in four years, many of them returning every year.',l:['Visit Innovation Foundry','https://www.innovationfoundry.io/']},
-{s:'women-in-stem',t:'Women in STEM Program',y:'2025 — now',o:'An AR/VR development program for young girls.',r:'Founder, lead instructor',k:'AR/VR development, curriculum design',st:'Running since September 2025',w:'A program that empowers young girls in technology, with a focus on AR/VR development.',
+{s:'women-in-stem',ph:0,v:0,t:'Women in STEM Program',y:'2025 — now',o:'An AR/VR development program for young girls.',r:'Founder, lead instructor',k:'AR/VR development, curriculum design',st:'Running since September 2025',w:'A program that empowers young girls in technology, with a focus on AR/VR development.',
  st3:[['Design','I designed and launched the program and its curriculum.'],['Logistics','I manage the budget, scheduling, scholarships, and staffing, and hired someone for marketing.'],['Teaching','I am the lead instructor, working alongside one other employee.']]},
-{s:'bci-ar',t:'Brain-controlled AR hand',y:'2025',o:'A Neurosity Crown connected to an AR animation that predicts which hand you raise.',r:'Designer and programmer',k:'Neurosity Crown, Python, Spline',st:'Finished, August 2025',w:'A brain-computer interface that connects a Neurosity Crown to an AR animation I made in Spline.',
+{s:'bci-ar',ph:4,v:2,t:'Brain-controlled AR hand',y:'2025',o:'A Neurosity Crown connected to an AR animation that predicts which hand you raise.',r:'Designer and programmer',k:'Neurosity Crown, Python, Spline',st:'Finished, August 2025',w:'A brain-computer interface that connects a Neurosity Crown to an AR animation I made in Spline.',
  st3:[['Animation','I made the AR hand animation in Spline.'],['Connection','A Python program connects the Crown to the animation.'],['Training','After a bit of training, it correctly predicts which hand the user is raising.']]},
-{s:'w17',t:'W17 slot-car track',y:'2026',o:'A car modeled from scratch, 3D printed, and driven around a track I built.',r:'Designer and builder',k:'OnShape, 3D printing, motor',st:'March to May 2026',w:'A W17 car I modeled from scratch, 3D printed, and drove around a track I built.',
+{s:'w17',ph:6,v:2,t:'W17 slot-car track',y:'2026',o:'A car modeled from scratch, 3D printed, and driven around a track I built.',r:'Designer and builder',k:'OnShape, 3D printing, motor',st:'March to May 2026',w:'A W17 car I modeled from scratch, 3D printed, and drove around a track I built.',
  st3:[['Model','I modeled the W17 from scratch in OnShape.'],['Print','I 3D printed the car.'],['Track','I put a motor inside the car and powered the track, similar to slot cars.']]},
-{s:'scavenger-hunt',t:'Downtown Summit scavenger hunt',y:'Summit, NJ',o:'An ESP32 clue hunt that sends people to local businesses.',r:'Designer and programmer',k:'ESP32, 3D modeling and printing',st:'Built for downtown Summit, NJ',w:'A scavenger hunt through downtown Summit, NJ, made to drive traffic to local businesses.',
+{s:'scavenger-hunt',ph:6,v:2,t:'Downtown Summit scavenger hunt',y:'Summit, NJ',o:'An ESP32 clue hunt that sends people to local businesses.',r:'Designer and programmer',k:'ESP32, 3D modeling and printing',st:'Built for downtown Summit, NJ',w:'A scavenger hunt through downtown Summit, NJ, made to drive traffic to local businesses.',
  st3:[['Case','I 3D modeled a case after a suitcase to house all of the electronics.'],['Clues','Each clue points to a local business with its own ESP32.'],['Code','I programmed the ESP32 to give the next clue once it gets in range of the ESP32 at the business the clue pointed to.']]},
-{s:'real-or-scam',t:'Real or Scam?',y:'Class project',o:'A Duolingo concept that teaches kids to spot scam texts before their first phone.',r:'Illustrator and course designer',k:'Sketching, course design',st:'Class project, pitched to a Duolingo employee',w:'A Duolingo concept that teaches kids to spot scam texts before their first phone, with Duo and a raccoon named Pawnzy.',
- st3:[['Characters','I created all of the sketches of Pawnzy, the raccoon.'],['Course','I helped create the course.'],['Pitch','The class project was then pitched to a Duolingo employee.']],l:['View the presentation','https://appiest.github.io/duolingo-if/present/?slide=1']}
+{s:'real-or-scam',ph:6,v:0,t:'Real or Scam?',y:'Class project',o:'A Duolingo concept that teaches kids to spot scam texts before their first phone.',r:'Illustrator and course designer',k:'Sketching, course design',st:'Class project, pitched to a Duolingo employee',w:'A Duolingo concept that teaches kids to spot scam texts before their first phone, with Duo and a raccoon named Pawnzy.',
+ st3:[['Characters','I created all of the sketches of Pawnzy, the raccoon.'],['Course','I helped create the course.'],['Pitch','The class project was then pitched to a Duolingo employee.']],l:['View the presentation','https://appiest.github.io/duolingo-if/present/?slide=1']},
+// New projects below: the text is a first draft written from the photos. Check and edit it.
+{s:'kinetic-art',ph:6,v:2,t:'Kinetic art',y:'3D printing',o:'Motorized, 3D printed spinners that turn patterns into motion.',r:'Designer and maker',k:'3D printing, CAD, motors',st:'A growing series of finished pieces',w:'A series of motorized kinetic sculptures. Each 3D printed disc spins inside its frame, and the pattern blurs into new shapes as it turns.',
+ st3:[['Design','I design each disc pattern and the stand that holds it.'],['Print','Every part is 3D printed, often in several colors.'],['Motion','A small motor spins the disc so the pattern comes alive.']]},
+{s:'lamps',ph:4,v:2,t:'LED lamps',y:'3D printing',o:'Custom 3D printed LED lamps, from a glowing moon to a team logo.',r:'Designer and instructor',k:'3D printing, LEDs',st:'Finished, also taught as a class',w:'Custom LED lamps with 3D printed shades and bases, in shapes like a moon, a flower, and a team logo. Kids in my classes build their own too.',
+ st3:[['Design','I model each shade and a base that hides the light.'],['Print','I print the shade in translucent filament so it glows.'],['Teach','Kids at Innovation Foundry design and take home their own lamps.']]},
+{s:'spline',ph:5,v:1,t:'Spline scenes',y:'3D design',o:'3D scenes and animations: a lava lamp, a tiny town, and cozy rooms.',r:'3D designer',k:'Spline',st:'Ongoing',w:'A collection of 3D scenes and animations made in Spline, including an animated lava lamp, a small town block, a 3D model of Innovation Foundry, and furnished rooms.',
+ st3:[['Model','I build each object and scene in Spline.'],['Light and color','I set the materials, lighting, and color for each scene.'],['Animate','Some scenes move, like the lava lamp.']]},
+{s:'pip',ph:6,v:0,t:'Pip',y:'Class project',o:'A glowing hologram assistant that listens to what you need and builds the app for you.',r:'Team member',k:'Hologram display, prototyping, pitching',st:'Presented in class',w:'Pip is an assistant shown as a glowing hologram. It listens and picks up on what you need, says back what it heard, and builds the app so you never see code.',
+ st3:[['Concept','Our team designed Pip as a friendly face for building apps without code.'],['Prototype','We built a hologram display so Pip floats above the table.'],['Pitch','We presented Pip and demoed it live to the class.']]},
+{s:'pet-food-advisor',ph:3,v:1,t:'Pet Food Advisor',y:'Web app',o:'L&amp;B Healthy Pet: a web app that helps owners choose pet food.',r:'Designer and builder',k:'Web design, prototyping',st:'Working prototype',w:'L&amp;B Healthy Pet is a web app that helps pet owners find the right food for their pet.',
+ st3:[['Design','I designed the look and the flow of the app.'],['Build','I built a working prototype.'],['Demo','I recorded a walkthrough of the app in use.']]},
+{s:'art',ph:6,v:0,t:'Art',y:'Painting and more',o:'Painting, drawing, ceramics, and hand-painted totes.',r:'Artist',k:'Acrylic, watercolor, colored pencil, ceramics',st:'Ongoing',w:'A selection of my art: paintings, sketchbook drawings, a ceramic koi tile, an op-art checkerboard piece, and hand-painted tote bags.'},
+{s:'photography',ph:6,v:0,t:'Photography',y:'Ongoing',o:'Landscapes, flowers, streets, and one very good dog.',r:'Photographer',k:'Composition, editing',st:'Ongoing',w:'Photos I have taken at home and while traveling.'}
 ];
-const $=q=>document.querySelector(q),cs=$('#case'),fine=matchMedia('(pointer:fine)').matches,calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-$('#list').innerHTML=P.map((p,i)=>`<li class="rv"><a href="#${p.s}" data-i="${i}"><span class="n">0${i+1}</span><span class="t">${p.t}</span><span class="d">${p.o}</span><span class="y">${p.y}</span></a></li>`).join('');
+const nn=k=>String(k).padStart(2,'0'),$=q=>document.querySelector(q),cs=$('#case'),fine=matchMedia('(pointer:fine)').matches,calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+$('#list').innerHTML=P.map((p,i)=>`<li class="rv"><a href="#${p.s}" data-i="${i}"><span class="n">${nn(i+1)}</span><span class="t">${p.t}</span><span class="d">${p.o}</span><span class="y">${p.y}</span></a></li>`).join('');
 const words=['3D modeling','AR','Embedded systems','Curriculum design','Prototyping','Teaching'];
 const m=words.map(w=>`<span>${w}</span><i>✦</i>`).join('');$('#mq').innerHTML=m+m;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 const reveal=r=>(r||document).querySelectorAll('.rv:not(.in)').forEach(e=>io.observe(e));reveal();
-const shot=(p,n)=>`<figure class="rv"><div class="ph">0${n}<img src="images/${p.s}/${n}.jpg" alt="${p.t}, photo ${n}" onerror="this.remove()"></div><figcaption class="lab">${p.t}, 0${n}</figcaption></figure>`;
+const shot=(p,n)=>`<figure class="rv"><div class="ph">${nn(n)}<img src="images/${p.s}/${n}.jpg" alt="${p.t}, photo ${n}" loading="lazy" onerror="this.remove()"></div><figcaption class="lab">${p.t}, ${nn(n)}</figcaption></figure>`;
+const clip=(p,n)=>`<video class="rv" src="images/${p.s}/v${n}.mp4" poster="images/${p.s}/v${n}.jpg" muted loop playsinline preload="none" aria-label="${p.t}, clip ${n}"></video>`;
+const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.preload='auto';if(!calm)v.play().catch(()=>{})}else v.pause()}),{threshold:.35});
+const rng=k=>Array.from({length:k},(_,j)=>j+1);
 function open(i){const p=P[i],n=P[(i+1)%P.length];
 cs.innerHTML=`<div class="top"><a href="#work">← All work</a><a href="#contact" onclick="location.hash='contact'">Contact</a></div><div class="wrap">
 <span class="lab">${p.y}</span><h1 class="disp">${p.t}</h1>
 <div class="sec"><span class="lab">00 Overview</span><dl class="ov"><div><dt class="lab">My role</dt><dd>${p.r}</dd></div><div><dt class="lab">Tools</dt><dd>${p.k}</dd></div><div><dt class="lab">Status</dt><dd>${p.st}</dd></div></dl></div>
 <div class="sec"><span class="lab">What is it?</span><p class="what">${p.w}</p>${p.l?`<p><a href="${p.l[1]}">${p.l[0]} ↗</a></p>`:''}</div>
-<div class="sec"><span class="lab">01 What I did</span><ol class="steps" style="margin-top:20px">${p.st3.map((s,k)=>`<li class="rv"><span class="lab">0${k+1}</span><b>${s[0]}</b><p>${s[1]}</p></li>`).join('')}</ol></div>
-<div class="sec"><span class="lab">02 Photos</span><div class="shots" style="margin-top:20px">${[1,2,3].map(k=>shot(p,k)).join('')}</div></div>
-${p.res?`<div class="sec"><span class="lab">03 Result</span><p class="what">${p.res}</p></div>`:''}
+${(()=>{let c=0;const L=t=>`<span class="lab">${nn(++c)} ${t}</span>`;return [
+p.st3?`<div class="sec">${L('What I did')}<ol class="steps" style="margin-top:20px">${p.st3.map((s,k)=>`<li class="rv"><span class="lab">${nn(k+1)}</span><b>${s[0]}</b><p>${s[1]}</p></li>`).join('')}</ol></div>`:'',
+p.ph?`<div class="sec">${L('Photos')}<div class="shots" style="margin-top:20px">${rng(p.ph).map(k=>shot(p,k)).join('')}</div></div>`:'',
+p.v?`<div class="sec">${L('In motion')}<div class="clips" style="margin-top:20px">${rng(p.v).map(k=>clip(p,k)).join('')}</div></div>`:'',
+p.res?`<div class="sec">${L('Result')}<p class="what">${p.res}</p></div>`:''].join('')})()}
 <a class="next disp" href="#${n.s}"><span class="lab" style="display:block">Next project</span>${n.t} →</a></div>`;
-cs.classList.add('on');document.body.classList.add('lock');cs.scrollTop=0;reveal(cs)}
-function route(){const i=P.findIndex(p=>'#'+p.s===location.hash);if(i>=0)open(i);else{cs.classList.remove('on');document.body.classList.remove('lock')}}
+cs.classList.add('on');document.body.classList.add('lock');cs.scrollTop=0;reveal(cs);cs.querySelectorAll('video').forEach(v=>vio.observe(v))}
+function route(){const i=P.findIndex(p=>'#'+p.s===location.hash);if(i>=0)open(i);else{cs.classList.remove('on');document.body.classList.remove('lock');cs.querySelectorAll('video').forEach(v=>v.pause())}}
 addEventListener('hashchange',route);route();
 addEventListener('keydown',e=>{if(e.key==='Escape'&&cs.classList.contains('on'))location.hash='work'});
 const hero=$('#hero'),bar=$('#bar');let tick=0;
@@ -167,7 +203,21 @@ if(fine&&!calm){const cur=$('#cur'),pk=$('#peek');let mx=0,my=0,cx=0,cy=0,px=0,p
 addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
 (function loop(){cx+=(mx-cx)*.35;cy+=(my-cy)*.35;px+=(mx+28-px)*.12;py+=(my-80-py)*.12;cur.style.transform=`translate(${cx}px,${cy}px)`;pk.style.transform=`translate(${px}px,${py}px)`;requestAnimationFrame(loop)})();
 document.addEventListener('mouseover',e=>cur.classList.toggle('big',!!e.target.closest('a,button')));
-document.querySelectorAll('#list a').forEach(a=>{const p=P[a.dataset.i];a.addEventListener('mouseenter',()=>{pk.innerHTML=`<img src="images/${p.s}/1.jpg" alt="" onerror="this.remove()"><span class="lab">0${+a.dataset.i+1}</span>`;pk.classList.add('on')});a.addEventListener('mouseleave',()=>pk.classList.remove('on'))})}
+document.querySelectorAll('#list a').forEach(a=>{const p=P[a.dataset.i];a.addEventListener('mouseenter',()=>{pk.innerHTML=`<img src="images/${p.s}/1.jpg" alt="" onerror="this.remove()"><span class="lab">${nn(+a.dataset.i+1)}</span>`;pk.classList.add('on')});a.addEventListener('mouseleave',()=>pk.classList.remove('on'))})}
+// Hero name: split letters, then a spotlight lens that follows the cursor
+document.querySelectorAll('#hero .nm>span').forEach(sp=>{sp.innerHTML=[...sp.textContent].map(c=>`<span class="l">${c}</span>`).join('')});
+if(fine){const lens=hero.querySelector('.lens'),A=[...hero.querySelectorAll('h1 .l')],B=[...lens.querySelectorAll('.l')],cur=$('#cur');let C=[],raf=0,ev=null,bt=0;
+const centers=()=>{C=A.map(l=>{const r=l.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]})};
+const set=(i,v)=>{A[i].style.setProperty('--l',v);B[i].style.setProperty('--l',v)};
+const move=()=>{raf=0;const r=hero.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top,R=Math.min(280,Math.max(130,innerWidth*.17));
+lens.style.setProperty('--x',x+'px');lens.style.setProperty('--y',y+'px');
+if(!calm){hero.style.setProperty('--rx',((x/r.width)-.5)*16+'deg');hero.style.setProperty('--ry',-((y/r.height)-.5)*12+'deg');
+C.forEach(([cx,cy],i)=>{const d=Math.hypot(ev.clientX-cx,ev.clientY-cy);set(i,Math.max(0,1-d/(R*1.4)).toFixed(3))})}};
+hero.addEventListener('pointerenter',e=>{if(e.pointerType!=='mouse')return;centers();ev=e;move();hero.classList.add('on');cur.style.opacity=0});
+hero.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;ev=e;if(!raf)raf=requestAnimationFrame(move)});
+hero.addEventListener('pointerleave',()=>{hero.classList.remove('on');lens.classList.remove('boom');hero.style.setProperty('--rx','0deg');hero.style.setProperty('--ry','0deg');A.forEach((_,i)=>set(i,0));cur.style.opacity=''});
+hero.addEventListener('pointerdown',()=>{lens.classList.add('boom');clearTimeout(bt);bt=setTimeout(()=>lens.classList.remove('boom'),900)});
+addEventListener('scroll',()=>{if(hero.classList.contains('on'))centers()},{passive:true});addEventListener('resize',centers)}
 </script>
 </body>
 </html>

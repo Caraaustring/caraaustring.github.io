@@ -7,151 +7,167 @@
 <meta name="description" content="Portfolio of Cara Austring, a USC student who designs, 3D models, programs, and teaches. Projects in AR, brain-computer interfaces, embedded systems, and STEM education.">
 <meta property="og:title" content="Cara Austring | Engineering and Design">
 <meta property="og:description" content="3D modeling, embedded systems, AR, and STEM education projects.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F1B2D'/%3E%3Crect x='6' y='11' width='20' height='10' rx='4' fill='%23FFC72C'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E1116'/%3E%3Crect x='6' y='11' width='20' height='10' rx='4' fill='%23FFC72C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0F1B2D;--fog:#EDF0F3;--slot:#FFC72C;--teal:#0B6E6A;--mid:#4F5B6B;--edge:#D3D9E3;color-scheme:light}
+:root{--bg:#0E1116;--fg:#F2F1EC;--mute:#9AA1AD;--acc:#FFC72C;--line:#262C36;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--fog);color:var(--ink);font:400 1.0625rem/1.6 "Hanken Grotesk",system-ui,sans-serif}
-a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--slot);text-decoration-thickness:3px;text-underline-offset:3px}
-a:hover{background:var(--slot)}
-a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
-h1,h2,h3{font-family:Unbounded,"Arial Black",system-ui,sans-serif;font-weight:700;line-height:1.1;margin:0;letter-spacing:-.01em}
-nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;font-weight:500}
-nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
-nav a{text-decoration:none}
-nav a:hover{background:none;text-decoration:underline;text-decoration-color:var(--slot)}
-.hero{padding:clamp(48px,10vw,120px) 0 clamp(40px,7vw,88px)}
-.hero h1{font-size:clamp(2.75rem,9.5vw,7.5rem);line-height:.98}
-.lede{max-width:34em;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.45;margin:32px 0 16px}
-.small{color:var(--mid);margin:0 0 28px}
-.links{display:flex;flex-wrap:wrap;gap:12px 28px;font-weight:700}
-h2{font-size:clamp(1.5rem,3vw,2.1rem)}
-.slot{height:12px;max-width:160px;border-radius:6px;margin:16px 0 40px;background:repeating-linear-gradient(90deg,var(--slot) 0 10px,transparent 10px 20px) center/100% 2px no-repeat,var(--ink)}
-.work{padding:clamp(24px,4vw,48px) 0 clamp(48px,8vw,96px)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.card{background:#fff;border:1px solid var(--edge);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
-.card.wide{grid-column:span 2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.media{position:relative;aspect-ratio:16/10;display:grid;place-items:center;background:var(--tint,#D3D9E3);overflow:hidden}
-.card.wide .media{aspect-ratio:auto;min-height:100%}
-.media svg{width:52%;height:auto;max-width:200px}
-.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.body{padding:24px}
-.card h3{font-size:1.25rem;margin-bottom:10px}
-.card.wide h3{font-size:1.6rem}
-.what{font-weight:500;margin:0 0 10px}
-.card p{margin:0 0 12px;color:var(--mid)}
-.card p.what{color:var(--ink)}
-.tag{display:inline-block;border:1px solid var(--edge);border-radius:999px;padding:2px 12px;font-size:.85rem;font-weight:500;color:var(--mid);margin:0 6px 6px 0}
-.about{padding:clamp(40px,7vw,88px) 0;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,56px)}
-.about p{margin:0 0 14px;max-width:38em}
-dl{margin:24px 0 0}dt{font-weight:700;margin-top:14px}dd{margin:0;color:var(--mid)}
-ul.also{padding-left:1.1em;margin:0}ul.also li{margin-bottom:6px}
-.contact{background:var(--ink);color:var(--fog);padding:clamp(48px,8vw,96px) 0}
-.contact a{color:var(--fog)}.contact a:hover{color:var(--ink)}
-.contact p{max-width:30em;font-size:1.2rem;margin:12px 0 24px}
-footer{padding:20px 0;color:var(--mid);font-size:.9rem}
-@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card.wide{grid-template-columns:1fr}.card.wide .media{aspect-ratio:16/10;min-height:0}.about{grid-template-columns:1fr}}
-@media (max-width:600px){.grid{grid-template-columns:1fr}.card.wide{grid-column:auto}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 1.0625rem/1.6 "Hanken Grotesk",system-ui,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.disp{font-family:Anton,Impact,"Arial Narrow Bold",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:.9}
+.lab{font:500 .78rem/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+#bar{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--acc);transform:scaleX(0);transform-origin:0;z-index:60}
+#cur{position:fixed;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--acc);pointer-events:none;z-index:70;mix-blend-mode:difference;transition:scale .2s;display:none}
+#cur.big{scale:3.2}
+@media (pointer:fine){#cur{display:block}}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;padding:20px clamp(20px,5vw,48px);mix-blend-mode:difference;color:#fff}
+.nav a{text-decoration:none;font-weight:700}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:110px 0 36px;overflow:hidden}
+.hero h1{margin:0;font-size:clamp(5rem,23vw,21rem);line-height:.84}
+.hero h1 span{display:block;white-space:nowrap}
+.hero h1 .a{transform:translateX(calc(var(--p,0)*-14vw))}
+.hero h1 .b{color:var(--acc);transform:translateX(calc(var(--p,0)*14vw))}
+.hero .row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:28px;align-items:flex-end}
+.hero p{max-width:30em;margin:0;font-size:1.2rem}
+.mq{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:14px 0}
+.mq div{display:inline-block;animation:m 30s linear infinite;font-size:1.6rem}
+.mq span{margin:0 22px}.mq i{color:var(--acc);font-style:normal}
+@keyframes m{to{transform:translateX(-50%)}}
+section{padding:clamp(64px,10vw,130px) 0}
+h2{font-size:clamp(2.6rem,8vw,6.5rem);margin:0 0 40px}
+#list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+#list a{display:grid;grid-template-columns:56px minmax(0,1.1fr) minmax(0,1.6fr) 130px;gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid var(--line);text-decoration:none;transition:padding .3s,color .3s}
+#list a:hover,#list a:focus-visible{padding-left:16px;color:var(--acc)}
+#list .n,#list .y{font:500 .85rem var(--mono);color:var(--mute)}
+#list .y{text-align:right}
+#list .t{font-family:Anton,Impact,sans-serif;text-transform:uppercase;font-size:clamp(1.7rem,3.6vw,2.8rem);line-height:1}
+#list .d{color:var(--mute)}
+#peek{position:fixed;left:0;top:0;width:300px;aspect-ratio:4/3;z-index:40;pointer-events:none;border-radius:8px;overflow:hidden;opacity:0;scale:.8;transition:opacity .2s,scale .2s;background:#1B212B;display:grid;place-items:center}
+#peek.on{opacity:1;scale:1}
+#peek img,.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px)}
+.about p{max-width:34em;margin:0 0 16px}
+.facts{display:grid;grid-template-columns:110px 1fr;gap:12px 20px;margin-top:28px}
+.facts dd{margin:0}
+pre{font:700 1rem/1 var(--mono);color:var(--acc);margin:0 0 24px}
+.big{display:block;font-size:clamp(3rem,13vw,11rem);text-decoration:none;line-height:.9}
+.big:hover{color:var(--acc)}
+.links{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:28px;font-weight:700}
+footer{padding:28px 0 40px;color:var(--mute);font-size:.9rem}
+#case{position:fixed;inset:0;z-index:55;background:var(--bg);overflow-y:auto;transform:translateY(100%);visibility:hidden;transition:transform .6s cubic-bezier(.7,0,.2,1),visibility 0s .6s}
+#case.on{transform:none;visibility:visible;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+#case .top{display:flex;justify-content:space-between;padding:20px clamp(20px,5vw,48px);font-weight:700}
+#case h1{font-size:clamp(3.2rem,12vw,10rem);margin:6vh 0 12px}
+#case h3{font-size:clamp(1.8rem,4vw,3rem);margin:0 0 20px}
+.sec{padding:clamp(40px,6vw,80px) 0;border-top:1px solid var(--line)}
+.ov{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0}
+.ov dd{margin:6px 0 0;font-size:1.1rem}
+.what{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.4;max-width:30em;margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.steps b{display:block;font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:1.6rem;margin:6px 0}
+.steps p{margin:0;color:var(--mute)}
+.shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding-bottom:12px}
+.shots figure{margin:0}
+.shots figure:nth-child(2){margin-top:48px}
+.ph{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#1B212B;display:grid;place-items:center;font:500 .85rem var(--mono);color:var(--mute)}
+figcaption{margin-top:10px}
+.next{display:block;text-decoration:none;font-size:clamp(2.2rem,7vw,5.5rem);padding:40px 0 60px}
+.next:hover{color:var(--acc)}
+.rv{opacity:0;transform:translateY(36px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+@media (max-width:860px){#list a{grid-template-columns:40px 1fr;gap:6px 14px}#list .d,#list .y{grid-column:2;text-align:left}.about,.ov,.steps,.shots{grid-template-columns:1fr}.shots figure:nth-child(2){margin-top:0}.nav ul{gap:16px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq div{animation:none}.rv{opacity:1;transform:none;transition:none}#case,#case.on{transition:none}.hero h1 span{transform:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <nav aria-label="Main"><a href="#top"><strong>CA</strong></a>
-    <ul><li><a href="#work">Work</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
-  <header class="hero" id="top">
-    <h1>Cara Austring</h1>
-    <p class="lede">I design, 3D model, and program things people can touch, from a slot-car track to a brain-controlled AR animation, and I teach kids to do the same.</p>
-    <p class="small">Freshman at USC, Business of Innovation, Iovine and Young Academy.</p>
-    <div class="links"><a href="#work">See the work</a><a href="resume.pdf">Resume (PDF)</a><a href="mailto:Cara.Austring@gmail.com">Email me</a></div>
-  </header>
+<div id="bar"></div><div id="cur"></div><div id="peek" aria-hidden="true"></div>
+<nav class="nav" aria-label="Main"><a href="#top">CA</a><ul><li><a href="#work">Work</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
 
-  <main>
-  <section class="work" id="work" aria-labelledby="work-title">
-    <h2 id="work-title">Selected work</h2><div class="slot" aria-hidden="true"></div>
-    <div class="grid">
+<main id="top">
+<header class="hero"><div class="wrap">
+  <h1 class="disp" id="hero"><span class="a">Cara</span><span class="b">Austring</span></h1>
+  <div class="row"><p>I design, 3D model, and program things people can touch, and I teach kids to do the same. Freshman at USC. Open to internships.</p><span class="lab">Scroll ↓</span></div>
+</div></header>
+<div class="mq disp" aria-hidden="true"><div id="mq"></div></div>
 
-      <article class="card wide" style="--tint:#FFE8A3">
-        <div class="media"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#0F1B2D" stroke-width="4" stroke-linejoin="round"><rect x="50" y="104" width="100" height="14" rx="4" fill="#FFC72C"/><rect x="58" y="88" width="84" height="14" rx="4" fill="#fff"/><rect x="66" y="72" width="68" height="14" rx="4" fill="#FFC72C"/><path d="M88 22h24v20l-12 14-12-14z" fill="#fff"/></svg><img src="images/foundry.jpg" alt="Students at an Innovation Foundry 3D printing class" onerror="this.remove()"></div>
-        <div class="body"><h3>Innovation Foundry</h3>
-          <p class="what">A 3D printing education business I founded in 2022 and still run.</p>
-          <p>I built the courses and teach most of the classes myself. Classes are capped at 12 students, and summer camps (capped at 15, mornings and afternoons) have sold out all 9 weeks. About 275 students ages 8 to 12 have come through in four years, and many return every year.</p>
-          <p>I interview, train, and schedule the team: one full-time employee and 12 seasonal staff in the summer. I now work on it remotely from USC while my brother runs the main role.</p>
-          <p><a href="https://www.innovationfoundry.io/">Visit Innovation Foundry</a></p>
-          <span class="tag">3D printing</span><span class="tag">Curriculum design</span><span class="tag">Hiring and training</span></div>
-      </article>
+<section id="work"><div class="wrap">
+  <h2 class="disp">Selected work</h2>
+  <ul id="list"></ul>
+</div></section>
 
-      <article class="card" style="--tint:#BFE3DF">
-        <div class="media"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#0F1B2D" stroke-width="4"><rect x="30" y="52" width="140" height="52" rx="24" fill="#fff"/><circle cx="76" cy="78" r="14" fill="#FFC72C"/><circle cx="124" cy="78" r="14" fill="#FFC72C"/></svg><img src="images/women-in-stem.jpg" alt="Girls working on AR/VR projects in the Women in STEM program" onerror="this.remove()"></div>
-        <div class="body"><h3>Women in STEM Program</h3>
-          <p class="what">An AR/VR development program for young girls, launched in September 2025.</p>
-          <p>I designed the curriculum and run the budget, scheduling, scholarships, and staffing, including hiring someone for marketing. I’m the lead instructor, alongside one other employee.</p>
-          <span class="tag">AR/VR</span><span class="tag">Program management</span></div>
-      </article>
-
-      <article class="card" style="--tint:#D3D9E3">
-        <div class="media"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#0B6E6A" stroke-width="5" stroke-linecap="round"><path d="M10 75q15-50 30 0t30 0t30 0t30 0t30 0t30 0"/><circle cx="60" cy="125" r="10" stroke="#0F1B2D"/><circle cx="140" cy="125" r="10" stroke="#0F1B2D" fill="#FFC72C"/></svg><img src="images/bci-ar.jpg" alt="The Neurosity Crown headset and the Spline AR hand animation" onerror="this.remove()"></div>
-        <div class="body"><h3>Brain-controlled AR hand</h3>
-          <p class="what">A brain-computer interface that predicts which hand you’re about to raise.</p>
-          <p>In August 2025 I connected a Neurosity Crown to an AR hand animation I made in Spline. A Python program learns from a short training session, then predicts which hand the user is raising.</p>
-          <span class="tag">Neurosity Crown</span><span class="tag">Python</span><span class="tag">Spline</span></div>
-      </article>
-
-      <article class="card" style="--tint:#FFE8A3">
-        <div class="media"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#0F1B2D" stroke-width="10" stroke-linecap="round"><rect x="30" y="30" width="140" height="90" rx="45"/><rect x="26" y="62" width="30" height="16" rx="6" fill="#FFC72C" stroke-width="4"/></svg><img src="images/w17.jpg" alt="The 3D printed W17 car on its track" onerror="this.remove()"></div>
-        <div class="body"><h3>W17 slot-car track</h3>
-          <p class="what">A car modeled from scratch, 3D printed, and driven around a track I built.</p>
-          <p>From March to May 2026, I modeled the W17 in OnShape and printed it. Then I put a motor inside the car and powered the track, so it runs like a slot car.</p>
-          <span class="tag">OnShape</span><span class="tag">3D printing</span><span class="tag">Motor</span></div>
-      </article>
-
-      <article class="card" style="--tint:#BFE3DF">
-        <div class="media"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#0F1B2D" stroke-width="5" stroke-linecap="round"><rect x="82" y="57" width="36" height="36" rx="6" fill="#FFC72C"/><path d="M58 52a34 34 0 0 0 0 46M142 52a34 34 0 0 1 0 46M44 38a56 56 0 0 0 0 74M156 38a56 56 0 0 1 0 74"/></svg><img src="images/esp32-hunt.jpg" alt="The suitcase-style ESP32 case used in the scavenger hunt" onerror="this.remove()"></div>
-        <div class="body"><h3>Downtown Summit scavenger hunt</h3>
-          <p class="what">An ESP32 clue hunt that sends people to local businesses.</p>
-          <p>To bring foot traffic to businesses in downtown Summit, NJ, I modeled a suitcase-style case for the electronics and programmed an ESP32 to reveal the next clue when it comes within range of the ESP32 at the next business.</p>
-          <span class="tag">ESP32</span><span class="tag">3D modeling</span><span class="tag">Embedded</span></div>
-      </article>
-
-      <article class="card" style="--tint:#D7F2BD">
-        <div class="media"><svg viewBox="0 0 200 150" aria-hidden="true" stroke="#0F1B2D" stroke-width="4" stroke-linejoin="round"><path d="M40 30h120a10 10 0 0 1 10 10v50a10 10 0 0 1-10 10H92l-26 22v-22H40a10 10 0 0 1-10-10V40a10 10 0 0 1 10-10z" fill="#fff"/><text x="100" y="82" text-anchor="middle" font-family="Unbounded,Arial Black,sans-serif" font-size="34" font-weight="700" fill="#0F1B2D" stroke="none">?</text></svg><img src="images/real-or-scam.jpg" alt="Pawnzy the raccoon, sketched for the Real or Scam course" onerror="this.remove()"></div>
-        <div class="body"><h3>Real or Scam?</h3>
-          <p class="what">A Duolingo concept that teaches kids to spot scam texts before their first phone.</p>
-          <p>This class project, pitched to a Duolingo employee, features Duo and a raccoon named Pawnzy. I drew all the raccoon sketches and helped create the course.</p>
-          <p><a href="https://appiest.github.io/duolingo-if/present/?slide=1&amp;beat=5">View the presentation</a></p>
-          <span class="tag">Illustration</span><span class="tag">Course design</span></div>
-      </article>
-    </div>
-  </section>
-
-  <section class="about" id="about">
-    <div><h2>About</h2></div>
-    <div>
-      <p>I started Innovation Foundry in 2022 to teach kids 3D printing, and I haven’t stopped making things since: CAD models, microcontroller projects, AR animations, and sets for my school’s plays and musicals.</p>
-      <p>I like the space between a working prototype and something people enjoy using. I’m interested in automotive and product design, AR and VR, and STEM education for young people.</p>
-      <dl>
-        <dt>Design and modeling</dt><dd>OnShape, Spline, 3D modeling and animation</dd>
-        <dt>Building and code</dt><dd>3D printing, Python, ESP32 microcontrollers</dd>
-        <dt>Teaching and leading</dt><dd>Curriculum design, hiring and training teams</dd>
-      </dl>
-      <dl><dt>Also</dt><dd><ul class="also"><li>TSA Engineering: advanced to Nationals with a hurricane- and flood-resistant hotel prototype, and co-wrote its design essay</li><li>Set designer on stage crew, building sets for school plays and musicals</li></ul></dd></dl>
-    </div>
-  </section>
-  </main>
-</div>
-
-<section class="contact" id="contact">
-  <div class="wrap">
-    <h2>Contact</h2>
-    <p>I’m looking for internships in product design and automotive engineering. Send me a note.</p>
-    <div class="links"><a href="mailto:Cara.Austring@gmail.com">Cara.Austring@gmail.com</a><a href="https://github.com/caraaustring">GitHub</a><a href="resume.pdf">Resume (PDF)</a></div>
+<section id="about"><div class="wrap about">
+  <div><h2 class="disp" style="margin:0">About</h2></div>
+  <div class="rv">
+    <pre aria-hidden="true">   .#.
+  .###.
+:#######:
+  '###'
+   '#'</pre>
+    <p>I started Innovation Foundry in 2022 to teach kids 3D printing, and I haven’t stopped making things since: CAD models, microcontroller projects, AR animations, and sets for my school’s plays and musicals.</p>
+    <p>I like the space between a working prototype and something people enjoy using.</p>
+    <dl class="facts"><dt class="lab">Studying</dt><dd>Business of Innovation, USC Iovine and Young Academy</dd><dt class="lab">Status</dt><dd>Open to internships in product design and automotive engineering</dd><dt class="lab">Tools</dt><dd>OnShape, Spline, Python, ESP32, 3D printing</dd><dt class="lab">Also</dt><dd>TSA Engineering Nationals (hurricane- and flood-resistant hotel prototype), stage crew set designer</dd></dl>
   </div>
-</section>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <span class="lab">Contact</span>
+  <a class="big disp" href="mailto:Cara.Austring@gmail.com">Say hello</a>
+  <div class="links"><a href="mailto:Cara.Austring@gmail.com">Cara.Austring@gmail.com</a><a href="https://github.com/caraaustring">GitHub</a><a href="resume.pdf">Resume (PDF)</a></div>
+</div></section>
+</main>
 <footer><div class="wrap">© 2026 Cara Austring</div></footer>
+<aside id="case" aria-label="Project"></aside>
+
+<script>
+const P=[
+{s:'foundry',t:'Innovation Foundry',y:'2022 — now',o:'A 3D printing education business for kids. I built the courses, run the team, and teach most classes.',r:'Founder, curriculum designer, lead instructor',k:'3D printing, curriculum design, hiring and training',st:'Running, managed remotely from USC',w:'A 3D printing and technology education business in Summit, NJ for kids ages 8 to 12. I founded it in August 2022.',
+ st3:[['Courses','I built out several of the courses and teach most classes on my own. Classes are capped at 12 students.'],['Summer camps','Camps are capped at 15 and have sold out for 9 weeks, mornings and afternoons. I am the lead during camps.'],['Team','I interview, train, and schedule 1 full-time employee and 12 seasonal summer staff. I now work remotely from USC while my brother runs the main role.']],
+ res:'About 275 unique customers in four years, many of them returning every year.',l:['Visit Innovation Foundry','https://www.innovationfoundry.io/']},
+{s:'women-in-stem',t:'Women in STEM Program',y:'2025 — now',o:'An AR/VR development program for young girls.',r:'Founder, lead instructor',k:'AR/VR development, curriculum design',st:'Running since September 2025',w:'A program that empowers young girls in technology, with a focus on AR/VR development.',
+ st3:[['Design','I designed and launched the program and its curriculum.'],['Logistics','I manage the budget, scheduling, scholarships, and staffing, and hired someone for marketing.'],['Teaching','I am the lead instructor, working alongside one other employee.']]},
+{s:'bci-ar',t:'Brain-controlled AR hand',y:'2025',o:'A Neurosity Crown connected to an AR animation that predicts which hand you raise.',r:'Designer and programmer',k:'Neurosity Crown, Python, Spline',st:'Finished, August 2025',w:'A brain-computer interface that connects a Neurosity Crown to an AR animation I made in Spline.',
+ st3:[['Animation','I made the AR hand animation in Spline.'],['Connection','A Python program connects the Crown to the animation.'],['Training','After a bit of training, it correctly predicts which hand the user is raising.']]},
+{s:'w17',t:'W17 slot-car track',y:'2026',o:'A car modeled from scratch, 3D printed, and driven around a track I built.',r:'Designer and builder',k:'OnShape, 3D printing, motor',st:'March to May 2026',w:'A W17 car I modeled from scratch, 3D printed, and drove around a track I built.',
+ st3:[['Model','I modeled the W17 from scratch in OnShape.'],['Print','I 3D printed the car.'],['Track','I put a motor inside the car and powered the track, similar to slot cars.']]},
+{s:'scavenger-hunt',t:'Downtown Summit scavenger hunt',y:'Summit, NJ',o:'An ESP32 clue hunt that sends people to local businesses.',r:'Designer and programmer',k:'ESP32, 3D modeling and printing',st:'Built for downtown Summit, NJ',w:'A scavenger hunt through downtown Summit, NJ, made to drive traffic to local businesses.',
+ st3:[['Case','I 3D modeled a case after a suitcase to house all of the electronics.'],['Clues','Each clue points to a local business with its own ESP32.'],['Code','I programmed the ESP32 to give the next clue once it gets in range of the ESP32 at the business the clue pointed to.']]},
+{s:'real-or-scam',t:'Real or Scam?',y:'Class project',o:'A Duolingo concept that teaches kids to spot scam texts before their first phone.',r:'Illustrator and course designer',k:'Sketching, course design',st:'Class project, pitched to a Duolingo employee',w:'A Duolingo concept that teaches kids to spot scam texts before their first phone, with Duo and a raccoon named Pawnzy.',
+ st3:[['Characters','I created all of the sketches of Pawnzy, the raccoon.'],['Course','I helped create the course.'],['Pitch','The class project was then pitched to a Duolingo employee.']],l:['View the presentation','https://appiest.github.io/duolingo-if/present/?slide=1']}
+];
+const $=q=>document.querySelector(q),cs=$('#case'),fine=matchMedia('(pointer:fine)').matches,calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+$('#list').innerHTML=P.map((p,i)=>`<li class="rv"><a href="#${p.s}" data-i="${i}"><span class="n">0${i+1}</span><span class="t">${p.t}</span><span class="d">${p.o}</span><span class="y">${p.y}</span></a></li>`).join('');
+const words=['3D modeling','AR','Embedded systems','Curriculum design','Prototyping','Teaching'];
+const m=words.map(w=>`<span>${w}</span><i>✦</i>`).join('');$('#mq').innerHTML=m+m;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+const reveal=r=>(r||document).querySelectorAll('.rv:not(.in)').forEach(e=>io.observe(e));reveal();
+const shot=(p,n)=>`<figure class="rv"><div class="ph">0${n}<img src="images/${p.s}/${n}.jpg" alt="${p.t}, photo ${n}" onerror="this.remove()"></div><figcaption class="lab">${p.t}, 0${n}</figcaption></figure>`;
+function open(i){const p=P[i],n=P[(i+1)%P.length];
+cs.innerHTML=`<div class="top"><a href="#work">← All work</a><a href="#contact" onclick="location.hash='contact'">Contact</a></div><div class="wrap">
+<span class="lab">${p.y}</span><h1 class="disp">${p.t}</h1>
+<div class="sec"><span class="lab">00 Overview</span><dl class="ov"><div><dt class="lab">My role</dt><dd>${p.r}</dd></div><div><dt class="lab">Tools</dt><dd>${p.k}</dd></div><div><dt class="lab">Status</dt><dd>${p.st}</dd></div></dl></div>
+<div class="sec"><span class="lab">What is it?</span><p class="what">${p.w}</p>${p.l?`<p><a href="${p.l[1]}">${p.l[0]} ↗</a></p>`:''}</div>
+<div class="sec"><span class="lab">01 What I did</span><ol class="steps" style="margin-top:20px">${p.st3.map((s,k)=>`<li class="rv"><span class="lab">0${k+1}</span><b>${s[0]}</b><p>${s[1]}</p></li>`).join('')}</ol></div>
+<div class="sec"><span class="lab">02 Photos</span><div class="shots" style="margin-top:20px">${[1,2,3].map(k=>shot(p,k)).join('')}</div></div>
+${p.res?`<div class="sec"><span class="lab">03 Result</span><p class="what">${p.res}</p></div>`:''}
+<a class="next disp" href="#${n.s}"><span class="lab" style="display:block">Next project</span>${n.t} →</a></div>`;
+cs.classList.add('on');document.body.classList.add('lock');cs.scrollTop=0;reveal(cs)}
+function route(){const i=P.findIndex(p=>'#'+p.s===location.hash);if(i>=0)open(i);else{cs.classList.remove('on');document.body.classList.remove('lock')}}
+addEventListener('hashchange',route);route();
+addEventListener('keydown',e=>{if(e.key==='Escape'&&cs.classList.contains('on'))location.hash='work'});
+const hero=$('#hero'),bar=$('#bar');let tick=0;
+addEventListener('scroll',()=>{if(tick)return;tick=requestAnimationFrame(()=>{tick=0;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;bar.style.transform=`scaleX(${h>0?y/h:0})`;if(!calm)hero.style.setProperty('--p',Math.min(y/innerHeight,1))})},{passive:true});
+if(fine&&!calm){const cur=$('#cur'),pk=$('#peek');let mx=0,my=0,cx=0,cy=0,px=0,py=0;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){cx+=(mx-cx)*.35;cy+=(my-cy)*.35;px+=(mx+28-px)*.12;py+=(my-80-py)*.12;cur.style.transform=`translate(${cx}px,${cy}px)`;pk.style.transform=`translate(${px}px,${py}px)`;requestAnimationFrame(loop)})();
+document.addEventListener('mouseover',e=>cur.classList.toggle('big',!!e.target.closest('a,button')));
+document.querySelectorAll('#list a').forEach(a=>{const p=P[a.dataset.i];a.addEventListener('mouseenter',()=>{pk.innerHTML=`<img src="images/${p.s}/1.jpg" alt="" onerror="this.remove()"><span class="lab">0${+a.dataset.i+1}</span>`;pk.classList.add('on')});a.addEventListener('mouseleave',()=>pk.classList.remove('on'))})}
+</script>
 </body>
 </html>

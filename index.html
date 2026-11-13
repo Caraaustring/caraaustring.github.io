@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0E1116;--fg:#F2F1EC;--mute:#9AA1AD;--acc:#FFC72C;--line:#262C36;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;color-scheme:dark}
+:root{--bg:#0E1116;--fg:#F2F1EC;--mute:#9AA1AD;--acc:#FFC72C;--line:#262C36;--card:#161B22;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 1.0625rem/1.6 "Hanken Grotesk",system-ui,sans-serif;overflow-x:hidden}
@@ -23,12 +23,14 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset
 .lab{font:500 .78rem/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
 #bar{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--acc);transform:scaleX(0);transform-origin:0;z-index:60}
-#cur{position:fixed;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--acc);pointer-events:none;z-index:70;mix-blend-mode:difference;transition:scale .2s;display:none}
-#cur.big{scale:3.2}
+#cur{position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--acc);pointer-events:none;z-index:70;mix-blend-mode:difference;transition:scale .25s,opacity .2s;display:none;will-change:transform}
+#cur.grow{scale:3.2}
 @media (pointer:fine){#cur{display:block}}
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;padding:20px clamp(20px,5vw,48px);mix-blend-mode:difference;color:#fff}
 .nav a{text-decoration:none;font-weight:700}
 .nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+
+/* Hero name + spotlight */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:110px 0 36px;overflow:hidden}
 @property --r{syntax:'<length>';inherits:true;initial-value:0px}
 .nmw{position:relative;transform:perspective(1100px) rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg));transition:transform .6s cubic-bezier(.2,.8,.2,1)}
@@ -38,10 +40,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset
 .hero .nm .a{transform:translateX(calc(var(--p,0)*-14vw))}
 .hero .nm .b{color:var(--acc);transform:translateX(calc(var(--p,0)*14vw))}
 .nm .l{display:inline-block;transform-origin:50% 100%;transform:translateY(calc(var(--l,0)*-.09em)) scale(calc(1 + var(--l,0)*.06),calc(1 + var(--l,0)*.16));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.lens{position:absolute;inset:0;pointer-events:none;background:var(--acc);color:transparent;-webkit-text-stroke:2px var(--bg);--r:0px;clip-path:circle(var(--r) at var(--x,50%) var(--y,50%));transition:--r .55s cubic-bezier(.2,.8,.2,1)}
-.hero .lens .b{color:var(--bg);-webkit-text-stroke:0}
+.lens{position:absolute;inset:0;pointer-events:none;background:var(--acc);--r:0px;clip-path:circle(var(--r) at var(--x,50%) var(--y,50%));transition:--r .55s cubic-bezier(.2,.8,.2,1)}
+.hero .lens .a,.hero .lens .b{color:var(--bg)}
 .nmw.on .lens{--r:clamp(130px,17vw,280px)}
-.nmw.on .lens.boom{--r:150vmax;transition:--r .9s cubic-bezier(.7,0,.2,1)}
 @media (pointer:fine){.nmw{cursor:none}}
 .hero .row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:28px;align-items:flex-end}
 .hero p{max-width:30em;margin:0;font-size:1.2rem}
@@ -51,6 +52,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset
 @keyframes m{to{transform:translateX(-50%)}}
 section{padding:clamp(64px,10vw,130px) 0}
 h2{font-size:clamp(2.6rem,8vw,6.5rem);margin:0 0 40px}
+
+/* Work list */
 #list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 #list a{display:grid;grid-template-columns:56px minmax(0,1.1fr) minmax(0,1.6fr) 130px;gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid var(--line);text-decoration:none;transition:padding .3s,color .3s}
 #list a:hover,#list a:focus-visible{padding-left:16px;color:var(--acc)}
@@ -58,46 +61,96 @@ h2{font-size:clamp(2.6rem,8vw,6.5rem);margin:0 0 40px}
 #list .y{text-align:right}
 #list .t{font-family:Anton,Impact,sans-serif;text-transform:uppercase;font-size:clamp(1.7rem,3.6vw,2.8rem);line-height:1}
 #list .d{color:var(--mute)}
-#peek{position:fixed;left:0;top:0;width:300px;aspect-ratio:4/3;z-index:40;pointer-events:none;border-radius:8px;overflow:hidden;opacity:0;scale:.8;transition:opacity .2s,scale .2s;background:#1B212B;display:grid;place-items:center}
+#peek{position:fixed;left:0;top:0;width:300px;aspect-ratio:4/3;z-index:40;pointer-events:none;border-radius:8px;overflow:hidden;opacity:0;scale:.8;transition:opacity .2s,scale .2s;background:#1B212B}
 #peek.on{opacity:1;scale:1}
 #peek img,.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#peek .lab{position:absolute;left:10px;bottom:8px;color:#fff;text-shadow:0 1px 4px #000}
+
+/* About */
 .about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px)}
 .about p{max-width:34em;margin:0 0 16px}
 .facts{display:grid;grid-template-columns:110px 1fr;gap:12px 20px;margin-top:28px}
 .facts dd{margin:0}
-pre{font:700 1rem/1 var(--mono);color:var(--acc);margin:0 0 24px}
-.big{display:block;font-size:clamp(3rem,13vw,11rem);text-decoration:none;line-height:.9}
-.big:hover{color:var(--acc)}
-.links{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:28px;font-weight:700}
+.me{width:100%;max-width:420px;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border-radius:8px;margin-top:32px;display:block}
+
+/* Info folders (About) */
+.files{position:relative;margin-top:clamp(56px,8vw,110px);padding:28px 0 12px;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;background-position:-1px -1px;border-radius:12px}
+.files .lab.k{display:block;margin:0 0 24px 4px}
+.fold{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:start}
+.fc{position:relative;margin-top:30px;transform:translateY(var(--y,0px)) rotate(var(--rot,0deg));transition:transform .2s ease-out;will-change:transform}
+.fc .tab{position:absolute;bottom:100%;right:0;height:30px;padding:0 18px 0 16px;display:flex;align-items:center;gap:10px;background:var(--card);border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:0}
+.fc .tab::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.fc .body{background:var(--card);border:1px solid var(--line);border-radius:12px 0 12px 12px;padding:18px;box-shadow:0 18px 40px rgba(0,0,0,.35);transition:border-color .3s,translate .3s}
+.fc:hover .body{border-color:var(--acc);translate:0 -6px}
+.fc img{width:100%;display:block;border-radius:8px;margin-bottom:14px;object-fit:cover}
+.fc .portrait{aspect-ratio:4/5;object-position:50% 20%}
+.fc .logo{aspect-ratio:1;object-fit:contain;background:#fff;padding:14px}
+.fc .store{aspect-ratio:4/3}
+.kv{border-top:1px solid #3A4250;padding:10px 0 14px}
+.kv:first-of-type{border-top:0}
+.kv .lab{display:block;font-size:.68rem}
+.kv b{display:block;font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(1.25rem,1.7vw,1.75rem);line-height:1.05;margin-top:6px;overflow-wrap:anywhere}
+
+/* Contact */
+#contact .hi{display:inline-block;font-size:clamp(3rem,13vw,11rem);text-decoration:none;line-height:.9}
+#contact .hi .l{display:inline-block;transition:transform .45s cubic-bezier(.2,.8,.2,1),color .3s;transition-delay:calc(var(--i)*25ms)}
+#contact .hi:hover .l{transform:translateY(-.08em) rotate(calc((var(--i) - 4)*1.5deg));color:var(--acc)}
+.cta-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.cta-top p{max-width:30em;margin:18px 0 0;font-size:1.2rem}
+.clock{text-align:right}
+.clock b{display:block;font:500 1.6rem var(--mono);color:var(--fg);margin-top:4px}
+.rows{list-style:none;margin:48px 0 0;padding:0;display:grid;gap:10px}
+.row-l{position:relative;display:grid;grid-template-columns:180px 1fr auto;align-items:center;gap:20px;padding:22px 26px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-decoration:none;overflow:hidden;isolation:isolate;transition:color .35s,border-color .35s}
+.row-l::before{content:"";position:absolute;inset:0;background:var(--acc);transform:scaleX(0);transform-origin:0 50%;transition:transform .45s cubic-bezier(.7,0,.2,1);z-index:-1}
+.row-l:hover,.row-l:focus-visible{color:var(--bg);border-color:var(--acc)}
+.row-l:hover::before,.row-l:focus-visible::before{transform:none}
+.row-l .k{font:500 .85rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);transition:color .35s}
+.row-l:hover .k{color:var(--bg)}
+.row-l .v{font-weight:700;font-size:clamp(1.05rem,2vw,1.4rem);overflow-wrap:anywhere}
+.row-l .ar{font-size:1.5rem;transform:translateX(-10px);opacity:0;transition:transform .35s,opacity .35s}
+.row-l:hover .ar,.row-l:focus-visible .ar{transform:none;opacity:1}
+.has-copy{position:relative}.has-copy .row-l{padding-right:130px}.has-copy .copy{position:absolute;right:64px;top:50%;translate:0 -50%;color:var(--mute)}.has-copy:hover .copy{color:var(--bg)}.has-copy:hover .row-l{color:var(--bg);border-color:var(--acc)}.has-copy:hover .row-l::before{transform:none}.has-copy:hover .row-l .k{color:var(--bg)}.has-copy:hover .ar{transform:none;opacity:1}
+.copy{font:500 .75rem var(--mono);letter-spacing:.1em;text-transform:uppercase;border:1px solid currentColor;border-radius:99px;padding:6px 12px;background:none;color:inherit;cursor:pointer}
 footer{padding:28px 0 40px;color:var(--mute);font-size:.9rem}
+
+/* Project page */
 #case{position:fixed;inset:0;z-index:55;background:var(--bg);overflow-y:auto;transform:translateY(100%);visibility:hidden;transition:transform .6s cubic-bezier(.7,0,.2,1),visibility 0s .6s}
 #case.on{transform:none;visibility:visible;transition:transform .6s cubic-bezier(.7,0,.2,1)}
 #case .top{display:flex;justify-content:space-between;padding:20px clamp(20px,5vw,48px);font-weight:700}
 #case h1{font-size:clamp(3.2rem,12vw,10rem);margin:6vh 0 12px}
-#case h3{font-size:clamp(1.8rem,4vw,3rem);margin:0 0 20px}
 .sec{padding:clamp(40px,6vw,80px) 0;border-top:1px solid var(--line)}
-.ov{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0}
-.ov dd{margin:6px 0 0;font-size:1.1rem}
+.sec>.lab{display:block;margin-bottom:22px}
+.ov{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 40px;margin:0}
+.ov dd{margin:8px 0 0;font-size:1.1rem;line-height:1.45}
 .what{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.4;max-width:30em;margin:0}
+.visit{display:inline-flex;align-items:center;gap:14px;margin-top:32px;padding:18px 30px;border-radius:99px;background:var(--acc);color:var(--bg);font-weight:700;font-size:1.2rem;text-decoration:none;transition:transform .3s,box-shadow .3s}
+.visit:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,199,44,.35)}
+.visit span{transition:transform .3s}.visit:hover span{transform:translate(4px,-4px)}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .steps b{display:block;font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:1.6rem;margin:6px 0}
 .steps p{margin:0;color:var(--mute)}
 .shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding-bottom:12px}
 .shots figure{margin:0}
 .shots figure:nth-child(3n+2){margin-top:48px}
-.clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
-.clips video{display:block;width:100%;max-height:78vh;object-fit:cover;border-radius:8px;background:#1B212B}
-.me{width:100%;max-width:420px;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border-radius:8px;margin-top:32px;display:block;filter:grayscale(1) contrast(1.05);transition:filter .5s}
-.me:hover{filter:none}
-.intro{width:100%;border-radius:8px;margin-top:28px;display:block;background:#1B212B}
-.ph{position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#1B212B;display:grid;place-items:center;font:500 .85rem var(--mono);color:var(--mute)}
+.ph{position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#1B212B}
 figcaption{margin-top:10px}
+.clips{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.clips video{display:block;height:min(70vh,600px);width:auto;max-width:100%;border-radius:8px;background:#1B212B}
+.clips video.wide{width:100%;height:auto;max-height:80vh}
+.deck{position:relative;aspect-ratio:16/10;max-height:80vh;width:100%;border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.deck iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.deck-bar{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;margin-top:14px}
+.deck-bar .btns{display:flex;gap:10px}
+.pill{font:700 .95rem "Hanken Grotesk",sans-serif;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:99px;padding:10px 18px;cursor:pointer;text-decoration:none}
+.pill:hover{border-color:var(--acc);color:var(--acc)}
 .next{display:block;text-decoration:none;font-size:clamp(2.2rem,7vw,5.5rem);padding:40px 0 60px}
 .next:hover{color:var(--acc)}
 .rv{opacity:0;transform:translateY(36px);transition:opacity .8s,transform .8s}
 .rv.in{opacity:1;transform:none}
-@media (max-width:860px){#list a{grid-template-columns:40px 1fr;gap:6px 14px}#list .d,#list .y{grid-column:2;text-align:left}.about,.ov,.steps,.shots{grid-template-columns:1fr}.shots figure:nth-child(n){margin-top:0}.nav ul{gap:16px}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq div{animation:none}.rv{opacity:1;transform:none;transition:none}#case,#case.on{transition:none}.hero .nm>span{transform:none!important}.nmw{transform:none!important}.nm .l{transform:none!important}}
+@media (max-width:1000px){.fold{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){#list a{grid-template-columns:40px 1fr;gap:6px 14px}#list .d,#list .y{grid-column:2;text-align:left}.about,.ov,.steps,.shots{grid-template-columns:1fr}.shots figure:nth-child(n){margin-top:0}.nav ul{gap:16px}.row-l{grid-template-columns:1fr auto}.row-l .k{grid-column:1/-1}.clock{text-align:left}.clips video{height:auto;width:100%}}
+@media (max-width:560px){.fold{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq div{animation:none}.rv{opacity:1;transform:none;transition:none}#case,#case.on{transition:none}.hero .nm>span,.nmw,.nm .l,.fc{transform:none!important}}
 </style>
 </head>
 <body>
@@ -119,94 +172,143 @@ figcaption{margin-top:10px}
   <ul id="list"></ul>
 </div></section>
 
-<section id="about"><div class="wrap about">
-  <div><h2 class="disp" style="margin:0">About</h2><img class="me rv" src="images/about/1.jpg" alt="Cara Austring" loading="lazy"></div>
-  <div class="rv">
-    <pre aria-hidden="true">   .#.
-  .###.
-:#######:
-  '###'
-   '#'</pre>
-    <p>I started Innovation Foundry in 2022 to teach kids 3D printing, and I haven’t stopped making things since: CAD models, microcontroller projects, AR animations, and sets for my school’s plays and musicals.</p>
-    <p>I like the space between a working prototype and something people enjoy using.</p>
-    <dl class="facts"><dt class="lab">Studying</dt><dd>Business of Innovation, USC Iovine and Young Academy</dd><dt class="lab">Status</dt><dd>Open to internships in product design and automotive engineering</dd><dt class="lab">Tools</dt><dd>OnShape, Spline, Python, ESP32, 3D printing</dd><dt class="lab">Also</dt><dd>TSA Engineering Nationals (hurricane- and flood-resistant hotel prototype), stage crew set designer</dd></dl>
-    <video class="intro" src="images/about/intro.mp4" poster="images/about/intro.jpg" controls playsinline preload="none" aria-label="Intro video"></video>
+<section id="about"><div class="wrap">
+  <div class="about">
+    <div><h2 class="disp" style="margin:0">About</h2><img class="me rv" src="images/about/1.jpg" alt="Cara Austring" loading="lazy"></div>
+    <div class="rv">
+      <p>I started Innovation Foundry in 2022 to teach kids 3D printing, and I haven’t stopped making things since: CAD models, microcontroller projects, AR animations, and sets for my school’s plays and musicals.</p>
+      <p>I like the space between a working prototype and something people enjoy using.</p>
+      <dl class="facts"><dt class="lab">Status</dt><dd>Open to internships in product design and automotive engineering</dd><dt class="lab">Tools</dt><dd>OnShape, Spline, Python, ESP32, 3D printing</dd><dt class="lab">Also</dt><dd>TSA Engineering Nationals (hurricane- and flood-resistant hotel prototype), stage crew set designer</dd></dl>
+    </div>
+  </div>
+
+  <div class="files" id="files">
+    <span class="lab k">General info</span>
+    <div class="fold">
+      <article class="fc" data-s="0" data-r="-1.2"><div class="tab lab">General info</div><div class="body">
+        <img class="portrait" src="images/about/1.jpg" alt="" loading="lazy">
+        <div class="kv"><span class="lab">Birthday</span><b>June 24th, 2008</b></div>
+        <div class="kv"><span class="lab">Hometown</span><b>Summit, New Jersey</b></div>
+      </div></article>
+      <article class="fc" data-s="1" data-r="1"><div class="tab lab">School</div><div class="body">
+        <div class="kv"><span class="lab">Major</span><b>Business of Innovation</b></div>
+        <div class="kv"><span class="lab">School</span><b>IYA at USC</b></div>
+        <div class="kv"><span class="lab">Year</span><b>Freshman</b></div>
+      </div></article>
+      <article class="fc" data-s="2" data-r="-.8"><div class="tab lab">Places I’ve lived</div><div class="body">
+        <div class="kv"><span class="lab">Hometown</span><b>Summit, New Jersey</b></div>
+        <div class="kv"><span class="lab">Also lived in</span><b>Charlottesville, Virginia</b></div>
+        <div class="kv"><span class="lab">And</span><b>Reading, England</b></div>
+      </div></article>
+      <article class="fc" data-s="3" data-r="1.4"><div class="tab lab">Founder</div><div class="body">
+        <img class="logo" src="images/foundry/6.jpg" alt="Innovation Foundry logo" loading="lazy">
+        <img class="store" src="images/foundry/1.jpg" alt="Innovation Foundry storefront in Summit, NJ" loading="lazy">
+        <div class="kv"><span class="lab">Founder</span><b>Innovation Foundry, 2022</b></div>
+      </div></article>
+    </div>
   </div>
 </div></section>
 
 <section id="contact"><div class="wrap">
   <span class="lab">Contact</span>
-  <a class="big disp" href="mailto:Cara.Austring@gmail.com">Say hello</a>
-  <div class="links"><a href="mailto:Cara.Austring@gmail.com">Cara.Austring@gmail.com</a><a href="https://github.com/caraaustring">GitHub</a><a href="resume.pdf">Resume (PDF)</a></div>
+  <div class="cta-top">
+    <div>
+      <a class="hi disp" id="hi" href="mailto:Cara.Austring@gmail.com">Say hello</a>
+      <p>Open to internships in product design and automotive engineering. I’d love to chat about anything design, engineering, or teaching.</p>
+    </div>
+    <div class="clock lab">Currently in Los Angeles<b id="clock">--:--</b></div>
+  </div>
+  <ul class="rows">
+    <li class="has-copy"><a class="row-l" href="mailto:Cara.Austring@gmail.com"><span class="k">Email</span><span class="v">Cara.Austring@gmail.com</span><span class="ar">↗</span></a><button class="copy" type="button" data-copy="Cara.Austring@gmail.com">Copy</button></li>
+    <li><a class="row-l" href="https://github.com/caraaustring" target="_blank" rel="noopener"><span class="k">GitHub</span><span class="v">github.com/caraaustring</span><span class="ar">↗</span></a></li>
+    <li><a class="row-l" href="https://www.innovationfoundry.io/" target="_blank" rel="noopener"><span class="k">My studio</span><span class="v">innovationfoundry.io</span><span class="ar">↗</span></a></li>
+    <li><a class="row-l" href="resume.pdf" target="_blank" rel="noopener"><span class="k">Resume</span><span class="v">Download PDF</span><span class="ar">↗</span></a></li>
+  </ul>
 </div></section>
 </main>
 <footer><div class="wrap">© 2026 Cara Austring</div></footer>
 <aside id="case" aria-label="Project"></aside>
 
 <script>
+/* Projects. ph = number of photos, v = number of videos, long = videos that play with sound and controls, cv = cover photo number */
 const P=[
-{s:'foundry',ph:6,v:0,t:'Innovation Foundry',y:'2022 — now',o:'A 3D printing education business for kids. I built the courses, run the team, and teach most classes.',r:'Founder, curriculum designer, lead instructor',k:'3D printing, curriculum design, hiring and training',st:'Running, managed remotely from USC',w:'A 3D printing and technology education business in Summit, NJ for kids ages 8 to 12. I founded it in August 2022.',
+{s:'foundry',ph:6,v:1,long:[1],cv:1,t:'Innovation Foundry',y:'2022 — now',o:'Technology studio that I opened in 2022 to allow kids to explore their passion for technology.',r:'Founder, curriculum designer, lead instructor',k:'3D printing, curriculum design, hiring and training',st:'Running, managed remotely from USC',w:'A 3D printing and technology education business in Summit, NJ for kids ages 8 to 12. I founded it in August 2022.',
  st3:[['Courses','I built out several of the courses and teach most classes on my own. Classes are capped at 12 students.'],['Summer camps','Camps are capped at 15 and have sold out for 9 weeks, mornings and afternoons. I am the lead during camps.'],['Team','I interview, train, and schedule 1 full-time employee and 12 seasonal summer staff. I now work remotely from USC while my brother runs the main role.']],
- res:'About 275 unique customers in four years, many of them returning every year.',l:['Visit Innovation Foundry','https://www.innovationfoundry.io/']},
-{s:'women-in-stem',ph:0,v:0,t:'Women in STEM Program',y:'2025 — now',o:'An AR/VR development program for young girls.',r:'Founder, lead instructor',k:'AR/VR development, curriculum design',st:'Running since September 2025',w:'A program that empowers young girls in technology, with a focus on AR/VR development.',
- st3:[['Design','I designed and launched the program and its curriculum.'],['Logistics','I manage the budget, scheduling, scholarships, and staffing, and hired someone for marketing.'],['Teaching','I am the lead instructor, working alongside one other employee.']]},
-{s:'bci-ar',ph:4,v:2,t:'Brain-controlled AR hand',y:'2025',o:'A Neurosity Crown connected to an AR animation that predicts which hand you raise.',r:'Designer and programmer',k:'Neurosity Crown, Python, Spline',st:'Finished, August 2025',w:'A brain-computer interface that connects a Neurosity Crown to an AR animation I made in Spline.',
+ res:'About 275 unique customers in four years, many of them returning every year.',l:['Visit innovationfoundry.io','https://www.innovationfoundry.io/'],big:1},
+{s:'bci-ar',ph:3,v:1,long:[1],cv:2,t:'Brain-Computer Interface',y:'2025',o:'A Neurosity Crown connected to an AR animation that predicts which hand you raise.',r:'Designer and programmer',k:'Neurosity Crown, Python, Spline',st:'Finished, August 2025',w:'A brain-computer interface that connects a Neurosity Crown to an AR animation I made in Spline.',
  st3:[['Animation','I made the AR hand animation in Spline.'],['Connection','A Python program connects the Crown to the animation.'],['Training','After a bit of training, it correctly predicts which hand the user is raising.']]},
-{s:'w17',ph:6,v:2,t:'W17 slot-car track',y:'2026',o:'A car modeled from scratch, 3D printed, and driven around a track I built.',r:'Designer and builder',k:'OnShape, 3D printing, motor',st:'March to May 2026',w:'A W17 car I modeled from scratch, 3D printed, and drove around a track I built.',
+{s:'w17',ph:6,v:2,long:[1],cv:4,t:'W17 Slot Car',y:'2026',o:'A car modeled from scratch, 3D printed, and driven around a track I built.',r:'Designer and builder',k:'OnShape, 3D printing, motor',st:'March to May 2026',w:'A W17 car I modeled from scratch, 3D printed, and drove around a track I built.',
  st3:[['Model','I modeled the W17 from scratch in OnShape.'],['Print','I 3D printed the car.'],['Track','I put a motor inside the car and powered the track, similar to slot cars.']]},
-{s:'scavenger-hunt',ph:6,v:2,t:'Downtown Summit scavenger hunt',y:'Summit, NJ',o:'An ESP32 clue hunt that sends people to local businesses.',r:'Designer and programmer',k:'ESP32, 3D modeling and printing',st:'Built for downtown Summit, NJ',w:'A scavenger hunt through downtown Summit, NJ, made to drive traffic to local businesses.',
+{s:'scavenger-hunt',ph:6,v:2,long:[2],cv:6,t:'Downtown Summit scavenger hunt',y:'Summit, NJ',o:'An ESP32 clue hunt that sends people to local businesses.',r:'Designer and programmer',k:'ESP32, 3D modeling and printing',st:'Built for downtown Summit, NJ',w:'A scavenger hunt through downtown Summit, NJ, made to drive traffic to local businesses.',
  st3:[['Case','I 3D modeled a case after a suitcase to house all of the electronics.'],['Clues','Each clue points to a local business with its own ESP32.'],['Code','I programmed the ESP32 to give the next clue once it gets in range of the ESP32 at the business the clue pointed to.']]},
-{s:'real-or-scam',ph:6,v:0,t:'Real or Scam?',y:'Class project',o:'A Duolingo concept that teaches kids to spot scam texts before their first phone.',r:'Illustrator and course designer',k:'Sketching, course design',st:'Class project, pitched to a Duolingo employee',w:'A Duolingo concept that teaches kids to spot scam texts before their first phone, with Duo and a raccoon named Pawnzy.',
- st3:[['Characters','I created all of the sketches of Pawnzy, the raccoon.'],['Course','I helped create the course.'],['Pitch','The class project was then pitched to a Duolingo employee.']],l:['View the presentation','https://appiest.github.io/duolingo-if/present/?slide=1']},
-// New projects below: the text is a first draft written from the photos. Check and edit it.
-{s:'kinetic-art',ph:6,v:2,t:'Kinetic art',y:'3D printing',o:'Motorized, 3D printed spinners that turn patterns into motion.',r:'Designer and maker',k:'3D printing, CAD, motors',st:'A growing series of finished pieces',w:'A series of motorized kinetic sculptures. Each 3D printed disc spins inside its frame, and the pattern blurs into new shapes as it turns.',
- st3:[['Design','I design each disc pattern and the stand that holds it.'],['Print','Every part is 3D printed, often in several colors.'],['Motion','A small motor spins the disc so the pattern comes alive.']]},
-{s:'lamps',ph:4,v:2,t:'LED lamps',y:'3D printing',o:'Custom 3D printed LED lamps, from a glowing moon to a team logo.',r:'Designer and instructor',k:'3D printing, LEDs',st:'Finished, also taught as a class',w:'Custom LED lamps with 3D printed shades and bases, in shapes like a moon, a flower, and a team logo. Kids in my classes build their own too.',
- st3:[['Design','I model each shade and a base that hides the light.'],['Print','I print the shade in translucent filament so it glows.'],['Teach','Kids at Innovation Foundry design and take home their own lamps.']]},
-{s:'spline',ph:5,v:1,t:'Spline scenes',y:'3D design',o:'3D scenes and animations: a lava lamp, a tiny town, and cozy rooms.',r:'3D designer',k:'Spline',st:'Ongoing',w:'A collection of 3D scenes and animations made in Spline, including an animated lava lamp, a small town block, a 3D model of Innovation Foundry, and furnished rooms.',
+{s:'real-or-scam',ph:3,v:0,cv:3,t:'Real or Scam?',y:'Class project',o:'A Duolingo concept that teaches kids to spot scam texts before their first phone.',r:'Illustrator and course designer',k:'GitHub and Illustrator',st:'Class project, pitched to a Duolingo employee',w:'A Duolingo concept that teaches kids to spot scam texts before their first phone, with Duo and a raccoon named Pawnzy.',
+ st3:[['Characters','I created the sketches of Pawnzy, the raccoon.'],['Course','I helped create the course.'],['Pitch','The class project was then pitched to a Duolingo employee.']],
+ deck:'https://appiest.github.io/duolingo-if/present/?slide=1'},
+{s:'kinetic-art',ph:6,v:2,long:[1],cv:5,t:'Kinetic art',y:'3D printing',o:'Motorized, 3D printed gears that were turned into a summer camp project for the Innovation Foundry.',r:'Designer and maker',k:'3D printing, CAD, motors',st:'Summer camp project at Innovation Foundry',w:'A series of motorized kinetic projects. Each 3D printed gear spins inside its frame, and the pattern blurs into a new shape as it turns.',
+ st3:[['Design','I designed the template and example project for the gears.'],['Print','Every part is 3D printed, often in several colors.'],['Motion','A small motor spins the gear so the pattern comes alive.']]},
+{s:'lamps',ph:6,v:2,cv:4,t:'LED lamps',y:'3D printing',o:'Custom 3D printed LED lamps for summer camps at the Innovation Foundry.',r:'Designer and instructor',k:'3D printing, laser cutting, LEDs',st:'Summer camp project at Innovation Foundry',w:'Custom LED lamps with a 3D printed back and laser cut front. Turned into a summer camp for the Innovation Foundry.',
+ st3:[['Design','I created the example project.'],['Print','I 3D printed the back and laser cut the front.'],['Teach','Kids at Innovation Foundry design and take home their own lamps.']]},
+{s:'spline',ph:5,v:1,cv:2,t:'Spline scenes',y:'3D design',o:'3D scenes and animations: a lava lamp, a tiny town, and cozy rooms.',r:'3D designer',k:'Spline',st:'Ongoing',w:'A collection of 3D scenes and animations made in Spline, including an animated lava lamp, a small town block, a 3D model of Innovation Foundry, and furnished rooms.',
  st3:[['Model','I build each object and scene in Spline.'],['Light and color','I set the materials, lighting, and color for each scene.'],['Animate','Some scenes move, like the lava lamp.']]},
-{s:'pip',ph:6,v:0,t:'Pip',y:'Class project',o:'A glowing hologram assistant that listens to what you need and builds the app for you.',r:'Team member',k:'Hologram display, prototyping, pitching',st:'Presented in class',w:'Pip is an assistant shown as a glowing hologram. It listens and picks up on what you need, says back what it heard, and builds the app so you never see code.',
- st3:[['Concept','Our team designed Pip as a friendly face for building apps without code.'],['Prototype','We built a hologram display so Pip floats above the table.'],['Pitch','We presented Pip and demoed it live to the class.']]},
-{s:'pet-food-advisor',ph:3,v:1,t:'Pet Food Advisor',y:'Web app',o:'L&amp;B Healthy Pet: a web app that helps owners choose pet food.',r:'Designer and builder',k:'Web design, prototyping',st:'Working prototype',w:'L&amp;B Healthy Pet is a web app that helps pet owners find the right food for their pet.',
+{s:'pip',ph:6,v:2,cv:3,t:'Pip',y:'Class project',o:'A glowing hologram assistant that listens to what you need and builds the app for you.',r:'Builder',k:'Projector and humidifiers',st:'Presented to Replit',w:'Pip is an assistant shown as a glowing hologram. It listens and picks up on what you need, says back what it heard, and builds the app so you never see code.',
+ st3:[['Concept','Our team designed Pip as a friendly face for building apps without code.'],['Prototype','We built a hologram display so Pip floats above the table.'],['Pitch','We presented Pip and demoed it live to an employee at Replit.']]},
+{s:'pet-food-advisor',ph:3,v:1,cv:1,t:'Pet Food Advisor',y:'Web app',o:'L&amp;B Healthy Pet: a web app that helps owners choose pet food.',r:'Designer and builder',k:'Web design, prototyping',st:'Working prototype',w:'L&amp;B Healthy Pet is a web app that helps pet owners find the right food for their pet.',
  st3:[['Design','I designed the look and the flow of the app.'],['Build','I built a working prototype.'],['Demo','I recorded a walkthrough of the app in use.']]},
-{s:'art',ph:6,v:0,t:'Art',y:'Painting and more',o:'Painting, drawing, ceramics, and hand-painted totes.',r:'Artist',k:'Acrylic, watercolor, colored pencil, ceramics',st:'Ongoing',w:'A selection of my art: paintings, sketchbook drawings, a ceramic koi tile, an op-art checkerboard piece, and hand-painted tote bags.'},
-{s:'photography',ph:6,v:0,t:'Photography',y:'Ongoing',o:'Landscapes, flowers, streets, and one very good dog.',r:'Photographer',k:'Composition, editing',st:'Ongoing',w:'Photos I have taken at home and while traveling.'}
+{s:'art',ph:6,v:0,cv:1,t:'Art',y:'Painting and more',o:'Painting, drawing, ceramics, and hand painted bags.',r:'Artist',k:'Acrylic, watercolor, colored pencil, ceramics',st:'Ongoing',w:'A selection of my art: paintings, sketchbook drawings, ceramic tiles, and a hand painted bag.'},
+{s:'photography',ph:6,v:0,cv:2,t:'Photography',y:'Ongoing',o:'Landscapes, flowers, streets, and my dog.',r:'Photographer',k:'Composition, editing',st:'Ongoing',w:'Photos I have taken at home and while traveling.'}
 ];
 const nn=k=>String(k).padStart(2,'0'),$=q=>document.querySelector(q),cs=$('#case'),fine=matchMedia('(pointer:fine)').matches,calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const split=el=>{let i=0;el.innerHTML=[...el.textContent].map(c=>c===' '?' ':`<span class="l" style="--i:${i++}">${c}</span>`).join('')};
 $('#list').innerHTML=P.map((p,i)=>`<li class="rv"><a href="#${p.s}" data-i="${i}"><span class="n">${nn(i+1)}</span><span class="t">${p.t}</span><span class="d">${p.o}</span><span class="y">${p.y}</span></a></li>`).join('');
 const words=['3D modeling','AR','Embedded systems','Curriculum design','Prototyping','Teaching'];
 const m=words.map(w=>`<span>${w}</span><i>✦</i>`).join('');$('#mq').innerHTML=m+m;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 const reveal=r=>(r||document).querySelectorAll('.rv:not(.in)').forEach(e=>io.observe(e));reveal();
-const shot=(p,n)=>`<figure class="rv"><div class="ph">${nn(n)}<img src="images/${p.s}/${n}.jpg" alt="${p.t}, photo ${n}" loading="lazy" onerror="this.remove()"></div><figcaption class="lab">${p.t}, ${nn(n)}</figcaption></figure>`;
-const clip=(p,n)=>`<video class="rv" src="images/${p.s}/v${n}.mp4" poster="images/${p.s}/v${n}.jpg" muted loop playsinline preload="none" aria-label="${p.t}, clip ${n}"></video>`;
-const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.preload='auto';if(!calm)v.play().catch(()=>{})}else v.pause()}),{threshold:.35});
+const shot=(p,n)=>`<figure class="rv"><div class="ph"><img src="images/${p.s}/${n}.jpg" alt="${p.t}, photo ${n}" loading="lazy"></div><figcaption class="lab">${p.t}, ${nn(n)}</figcaption></figure>`;
+const clip=(p,n)=>{const lg=(p.long||[]).includes(n);return `<video class="rv${p.s==='foundry'||p.s==='bci-ar'?' wide':''}" src="images/${p.s}/v${n}.mp4" poster="images/${p.s}/v${n}.jpg" playsinline preload="none" ${lg?'controls':'muted loop data-auto'} aria-label="${p.t}, video ${n}"></video>`};
+const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.preload='auto';if(!calm&&v.hasAttribute('data-auto'))v.play().catch(()=>{})}else v.pause()}),{threshold:.35});
 const rng=k=>Array.from({length:k},(_,j)=>j+1);
-function open(i){const p=P[i],n=P[(i+1)%P.length];
-cs.innerHTML=`<div class="top"><a href="#work">← All work</a><a href="#contact" onclick="location.hash='contact'">Contact</a></div><div class="wrap">
+const deck=p=>`<div class="deck rv"><iframe src="${p.deck}" title="${p.t} presentation" loading="lazy" allow="fullscreen"></iframe></div>
+<div class="deck-bar"><span class="lab">Click the slide or use the arrow keys to step through</span><span class="btns"><button class="pill" type="button" data-restart>↺ Restart</button><a class="pill" href="${p.deck}" target="_blank" rel="noopener">Full screen ↗</a></span></div>`;
+function open(i){const p=P[i],n=P[(i+1)%P.length];let c=0;const L=t=>`<span class="lab">${nn(++c)} ${t}</span>`;
+cs.innerHTML=`<div class="top"><a href="#work">← All work</a><a href="#contact">Contact</a></div><div class="wrap">
 <span class="lab">${p.y}</span><h1 class="disp">${p.t}</h1>
 <div class="sec"><span class="lab">00 Overview</span><dl class="ov"><div><dt class="lab">My role</dt><dd>${p.r}</dd></div><div><dt class="lab">Tools</dt><dd>${p.k}</dd></div><div><dt class="lab">Status</dt><dd>${p.st}</dd></div></dl></div>
-<div class="sec"><span class="lab">What is it?</span><p class="what">${p.w}</p>${p.l?`<p><a href="${p.l[1]}">${p.l[0]} ↗</a></p>`:''}</div>
-${(()=>{let c=0;const L=t=>`<span class="lab">${nn(++c)} ${t}</span>`;return [
-p.st3?`<div class="sec">${L('What I did')}<ol class="steps" style="margin-top:20px">${p.st3.map((s,k)=>`<li class="rv"><span class="lab">${nn(k+1)}</span><b>${s[0]}</b><p>${s[1]}</p></li>`).join('')}</ol></div>`:'',
-p.ph?`<div class="sec">${L('Photos')}<div class="shots" style="margin-top:20px">${rng(p.ph).map(k=>shot(p,k)).join('')}</div></div>`:'',
-p.v?`<div class="sec">${L('In motion')}<div class="clips" style="margin-top:20px">${rng(p.v).map(k=>clip(p,k)).join('')}</div></div>`:'',
-p.res?`<div class="sec">${L('Result')}<p class="what">${p.res}</p></div>`:''].join('')})()}
+<div class="sec"><span class="lab">What is it?</span><p class="what">${p.w}</p>${p.l?(p.big?`<a class="visit" href="${p.l[1]}" target="_blank" rel="noopener">${p.l[0]} <span>↗</span></a>`:`<p><a href="${p.l[1]}">${p.l[0]} ↗</a></p>`):''}</div>
+${p.st3?`<div class="sec">${L('What I did')}<ol class="steps">${p.st3.map((s,k)=>`<li class="rv"><span class="lab">${nn(k+1)}</span><b>${s[0]}</b><p>${s[1]}</p></li>`).join('')}</ol></div>`:''}
+${p.ph?`<div class="sec">${L('Photos')}<div class="shots">${rng(p.ph).map(k=>shot(p,k)).join('')}</div></div>`:''}
+${p.v?`<div class="sec">${L(p.v>1?'Videos':'Video')}<div class="clips">${rng(p.v).map(k=>clip(p,k)).join('')}</div></div>`:''}
+${p.deck?`<div class="sec">${L('Presentation')}${deck(p)}</div>`:''}
+${p.res?`<div class="sec">${L('Result')}<p class="what">${p.res}</p></div>`:''}
 <a class="next disp" href="#${n.s}"><span class="lab" style="display:block">Next project</span>${n.t} →</a></div>`;
+const rb=cs.querySelector('[data-restart]');if(rb)rb.onclick=()=>{const f=cs.querySelector('.deck iframe');f.src=p.deck};
 cs.classList.add('on');document.body.classList.add('lock');cs.scrollTop=0;reveal(cs);cs.querySelectorAll('video').forEach(v=>vio.observe(v))}
-function route(){const i=P.findIndex(p=>'#'+p.s===location.hash);if(i>=0)open(i);else{cs.classList.remove('on');document.body.classList.remove('lock');cs.querySelectorAll('video').forEach(v=>v.pause())}}
+function route(){const i=P.findIndex(p=>'#'+p.s===location.hash);if(i>=0)open(i);else if(cs.classList.contains('on')){cs.classList.remove('on');document.body.classList.remove('lock');cs.querySelectorAll('video').forEach(v=>v.pause());setTimeout(()=>{if(!cs.classList.contains('on'))cs.innerHTML=''},650)}}
 addEventListener('hashchange',route);route();
 addEventListener('keydown',e=>{if(e.key==='Escape'&&cs.classList.contains('on'))location.hash='work'});
-const hero=$('#hero'),bar=$('#bar');let tick=0;
-addEventListener('scroll',()=>{if(tick)return;tick=requestAnimationFrame(()=>{tick=0;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;bar.style.transform=`scaleX(${h>0?y/h:0})`;if(!calm)hero.style.setProperty('--p',Math.min(y/innerHeight,1))})},{passive:true});
-if(fine&&!calm){const cur=$('#cur'),pk=$('#peek');let mx=0,my=0,cx=0,cy=0,px=0,py=0;
+
+/* Scroll: progress bar, hero parallax, info folders */
+const hero=$('#hero'),bar=$('#bar'),cards=[...document.querySelectorAll('.fc')];let tick=0;
+function onScroll(){tick=0;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;bar.style.transform=`scaleX(${h>0?y/h:0})`;if(calm)return;
+hero.style.setProperty('--p',Math.min(y/innerHeight,1));
+if(innerWidth>560)cards.forEach(c=>{const r=c.parentElement.getBoundingClientRect(),q=Math.min(1,Math.max(0,(innerHeight-r.top)/(innerHeight*.9))),s=+c.dataset.s;c.style.setProperty('--y',((1-q)*(60+s*70)).toFixed(1)+'px');c.style.setProperty('--rot',((1-q)*c.dataset.r*3).toFixed(2)+'deg')})}
+addEventListener('scroll',()=>{if(!tick)tick=requestAnimationFrame(onScroll)},{passive:true});onScroll();
+
+/* Contact */
+split($('#hi'));
+const clk=$('#clock'),tf=new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Los_Angeles'});const tickClock=()=>clk.textContent=tf.format(new Date());tickClock();setInterval(tickClock,15000);
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();navigator.clipboard?.writeText(b.dataset.copy).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1600)})}));
+
+/* Cursor + hover previews */
+if(fine&&!calm){const cur=$('#cur'),pk=$('#peek');let mx=-100,my=-100,cx=-100,cy=-100,px=0,py=0;
 addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-(function loop(){cx+=(mx-cx)*.35;cy+=(my-cy)*.35;px+=(mx+28-px)*.12;py+=(my-80-py)*.12;cur.style.transform=`translate(${cx}px,${cy}px)`;pk.style.transform=`translate(${px}px,${py}px)`;requestAnimationFrame(loop)})();
-document.addEventListener('mouseover',e=>cur.classList.toggle('big',!!e.target.closest('a,button')));
-document.querySelectorAll('#list a').forEach(a=>{const p=P[a.dataset.i];a.addEventListener('mouseenter',()=>{pk.innerHTML=`<img src="images/${p.s}/1.jpg" alt="" onerror="this.remove()"><span class="lab">${nn(+a.dataset.i+1)}</span>`;pk.classList.add('on')});a.addEventListener('mouseleave',()=>pk.classList.remove('on'))})}
-// Hero name: split letters, then a spotlight lens that follows the cursor
-document.querySelectorAll('#hero .nm>span').forEach(sp=>{sp.innerHTML=[...sp.textContent].map(c=>`<span class="l">${c}</span>`).join('')});
-if(fine){const lens=hero.querySelector('.lens'),A=[...hero.querySelectorAll('h1 .l')],B=[...lens.querySelectorAll('.l')],cur=$('#cur');let C=[],raf=0,ev=null,bt=0;
+(function loop(){cx+=(mx-cx)*.35;cy+=(my-cy)*.35;px+=(mx+28-px)*.12;py+=(my-80-py)*.12;cur.style.transform=`translate3d(${cx}px,${cy}px,0)`;pk.style.transform=`translate3d(${px}px,${py}px,0)`;requestAnimationFrame(loop)})();
+let last=null;document.addEventListener('mouseover',e=>{const t=e.target.closest('a,button');if(t!==last){last=t;cur.classList.toggle('grow',!!t)}});
+document.querySelectorAll('#list a').forEach(a=>{const p=P[a.dataset.i];a.addEventListener('mouseenter',()=>{pk.innerHTML=`<img src="images/${p.s}/${p.cv||1}.jpg" alt=""><span class="lab">${nn(+a.dataset.i+1)}</span>`;pk.classList.add('on')});a.addEventListener('mouseleave',()=>pk.classList.remove('on'))})}
+
+/* Hero name spotlight */
+document.querySelectorAll('#hero .nm>span').forEach(split);
+if(fine){const lens=hero.querySelector('.lens'),A=[...hero.querySelectorAll('h1 .l')],B=[...lens.querySelectorAll('.l')],cur=$('#cur');let C=[],raf=0,ev=null;
 const centers=()=>{C=A.map(l=>{const r=l.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]})};
 const set=(i,v)=>{A[i].style.setProperty('--l',v);B[i].style.setProperty('--l',v)};
 const move=()=>{raf=0;const r=hero.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top,R=Math.min(280,Math.max(130,innerWidth*.17));
@@ -215,8 +317,7 @@ if(!calm){hero.style.setProperty('--rx',((x/r.width)-.5)*16+'deg');hero.style.se
 C.forEach(([cx,cy],i)=>{const d=Math.hypot(ev.clientX-cx,ev.clientY-cy);set(i,Math.max(0,1-d/(R*1.4)).toFixed(3))})}};
 hero.addEventListener('pointerenter',e=>{if(e.pointerType!=='mouse')return;centers();ev=e;move();hero.classList.add('on');cur.style.opacity=0});
 hero.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;ev=e;if(!raf)raf=requestAnimationFrame(move)});
-hero.addEventListener('pointerleave',()=>{hero.classList.remove('on');lens.classList.remove('boom');hero.style.setProperty('--rx','0deg');hero.style.setProperty('--ry','0deg');A.forEach((_,i)=>set(i,0));cur.style.opacity=''});
-hero.addEventListener('pointerdown',()=>{lens.classList.add('boom');clearTimeout(bt);bt=setTimeout(()=>lens.classList.remove('boom'),900)});
+hero.addEventListener('pointerleave',()=>{hero.classList.remove('on');hero.style.setProperty('--rx','0deg');hero.style.setProperty('--ry','0deg');A.forEach((_,i)=>set(i,0));cur.style.opacity=''});
 addEventListener('scroll',()=>{if(hero.classList.contains('on'))centers()},{passive:true});addEventListener('resize',centers)}
 </script>
 </body>

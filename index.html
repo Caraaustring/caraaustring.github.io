@@ -40,9 +40,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset
 .hero .nm .a{transform:translateX(calc(var(--p,0)*-14vw))}
 .hero .nm .b{color:var(--acc);transform:translateX(calc(var(--p,0)*14vw))}
 .nm .l{display:inline-block;transform-origin:50% 100%;transform:translateY(calc(var(--l,0)*-.09em)) scale(calc(1 + var(--l,0)*.06),calc(1 + var(--l,0)*.16));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.lens{position:absolute;inset:0;pointer-events:none;background:var(--acc);--r:0px;clip-path:circle(var(--r) at var(--x,50%) var(--y,50%));transition:--r .55s cubic-bezier(.2,.8,.2,1)}
-.hero .lens .a,.hero .lens .b{color:var(--bg)}
+.lens{--pad:60vw;position:absolute;inset:calc(var(--pad)*-1);padding:var(--pad);pointer-events:none;background:var(--acc);--r:0px;clip-path:circle(var(--r) at calc(var(--x,50%) + var(--pad)) calc(var(--y,50%) + var(--pad)));transition:--r .55s cubic-bezier(.2,.8,.2,1)}
+.hero .lens .a{color:transparent;-webkit-text-stroke:2px var(--bg)}
+.hero .lens .b{color:var(--bg)}
 .nmw.on .lens{--r:clamp(130px,17vw,280px)}
+.nmw.on .lens.boom{--r:150vmax;transition:--r .9s cubic-bezier(.7,0,.2,1)}
 @media (pointer:fine){.nmw{cursor:none}}
 .hero .row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:28px;align-items:flex-end}
 .hero p{max-width:30em;margin:0;font-size:1.2rem}
@@ -84,7 +86,7 @@ h2{font-size:clamp(2.6rem,8vw,6.5rem);margin:0 0 40px}
 .fc:hover .body{border-color:var(--acc);translate:0 -6px}
 .fc img{width:100%;display:block;border-radius:8px;margin-bottom:14px;object-fit:cover}
 .fc .portrait{aspect-ratio:4/5;object-position:50% 20%}
-.fc .logo{aspect-ratio:1;object-fit:contain;background:#fff;padding:14px}
+.fc .logo{aspect-ratio:1;object-fit:cover;background:#fff}
 .fc .store{aspect-ratio:4/3}
 .kv{border-top:1px solid #3A4250;padding:10px 0 14px}
 .kv:first-of-type{border-top:0}
@@ -201,7 +203,7 @@ figcaption{margin-top:10px}
         <div class="kv"><span class="lab">And</span><b>Reading, England</b></div>
       </div></article>
       <article class="fc" data-s="3" data-r="1.4"><div class="tab lab">Founder</div><div class="body">
-        <img class="logo" src="images/foundry/6.jpg" alt="Innovation Foundry logo" loading="lazy">
+        <img class="logo" src="images/foundry/logo.jpg" alt="Innovation Foundry logo" loading="lazy">
         <img class="store" src="images/foundry/1.jpg" alt="Innovation Foundry storefront in Summit, NJ" loading="lazy">
         <div class="kv"><span class="lab">Founder</span><b>Innovation Foundry, 2022</b></div>
       </div></article>
@@ -244,13 +246,13 @@ const P=[
 {s:'real-or-scam',ph:3,v:0,cv:3,t:'Real or Scam?',y:'Class project',o:'A Duolingo concept that teaches kids to spot scam texts before their first phone.',r:'Illustrator and course designer',k:'GitHub and Illustrator',st:'Class project, pitched to a Duolingo employee',w:'A Duolingo concept that teaches kids to spot scam texts before their first phone, with Duo and a raccoon named Pawnzy.',
  st3:[['Characters','I created the sketches of Pawnzy, the raccoon.'],['Course','I helped create the course.'],['Pitch','The class project was then pitched to a Duolingo employee.']],
  deck:'https://appiest.github.io/duolingo-if/present/?slide=1'},
-{s:'kinetic-art',ph:6,v:2,long:[1],cv:5,t:'Kinetic art',y:'3D printing',o:'Motorized, 3D printed gears that were turned into a summer camp project for the Innovation Foundry.',r:'Designer and maker',k:'3D printing, CAD, motors',st:'Summer camp project at Innovation Foundry',w:'A series of motorized kinetic projects. Each 3D printed gear spins inside its frame, and the pattern blurs into a new shape as it turns.',
+{s:'kinetic-art',ph:6,v:2,long:[1],cv:1,t:'Kinetic art',y:'3D printing',o:'Motorized, 3D printed gears that were turned into a summer camp project for the Innovation Foundry.',r:'Designer and maker',k:'3D printing, CAD, motors',st:'Summer camp project at Innovation Foundry',w:'A series of motorized kinetic projects. Each 3D printed gear spins inside its frame, and the pattern blurs into a new shape as it turns.',
  st3:[['Design','I designed the template and example project for the gears.'],['Print','Every part is 3D printed, often in several colors.'],['Motion','A small motor spins the gear so the pattern comes alive.']]},
 {s:'lamps',ph:6,v:2,cv:4,t:'LED lamps',y:'3D printing',o:'Custom 3D printed LED lamps for summer camps at the Innovation Foundry.',r:'Designer and instructor',k:'3D printing, laser cutting, LEDs',st:'Summer camp project at Innovation Foundry',w:'Custom LED lamps with a 3D printed back and laser cut front. Turned into a summer camp for the Innovation Foundry.',
  st3:[['Design','I created the example project.'],['Print','I 3D printed the back and laser cut the front.'],['Teach','Kids at Innovation Foundry design and take home their own lamps.']]},
 {s:'spline',ph:5,v:1,cv:2,t:'Spline scenes',y:'3D design',o:'3D scenes and animations: a lava lamp, a tiny town, and cozy rooms.',r:'3D designer',k:'Spline',st:'Ongoing',w:'A collection of 3D scenes and animations made in Spline, including an animated lava lamp, a small town block, a 3D model of Innovation Foundry, and furnished rooms.',
  st3:[['Model','I build each object and scene in Spline.'],['Light and color','I set the materials, lighting, and color for each scene.'],['Animate','Some scenes move, like the lava lamp.']]},
-{s:'pip',ph:6,v:2,cv:3,t:'Pip',y:'Class project',o:'A glowing hologram assistant that listens to what you need and builds the app for you.',r:'Builder',k:'Projector and humidifiers',st:'Presented to Replit',w:'Pip is an assistant shown as a glowing hologram. It listens and picks up on what you need, says back what it heard, and builds the app so you never see code.',
+{s:'pip',ph:6,v:2,cv:5,t:'Pip',y:'Class project',o:'A glowing hologram assistant that listens to what you need and builds the app for you.',r:'Builder',k:'Projector and humidifiers',st:'Presented to Replit',w:'Pip is an assistant shown as a glowing hologram. It listens and picks up on what you need, says back what it heard, and builds the app so you never see code.',
  st3:[['Concept','Our team designed Pip as a friendly face for building apps without code.'],['Prototype','We built a hologram display so Pip floats above the table.'],['Pitch','We presented Pip and demoed it live to an employee at Replit.']]},
 {s:'pet-food-advisor',ph:3,v:1,cv:1,t:'Pet Food Advisor',y:'Web app',o:'L&amp;B Healthy Pet: a web app that helps owners choose pet food.',r:'Designer and builder',k:'Web design, prototyping',st:'Working prototype',w:'L&amp;B Healthy Pet is a web app that helps pet owners find the right food for their pet.',
  st3:[['Design','I designed the look and the flow of the app.'],['Build','I built a working prototype.'],['Demo','I recorded a walkthrough of the app in use.']]},
@@ -317,7 +319,8 @@ if(!calm){hero.style.setProperty('--rx',((x/r.width)-.5)*16+'deg');hero.style.se
 C.forEach(([cx,cy],i)=>{const d=Math.hypot(ev.clientX-cx,ev.clientY-cy);set(i,Math.max(0,1-d/(R*1.4)).toFixed(3))})}};
 hero.addEventListener('pointerenter',e=>{if(e.pointerType!=='mouse')return;centers();ev=e;move();hero.classList.add('on');cur.style.opacity=0});
 hero.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;ev=e;if(!raf)raf=requestAnimationFrame(move)});
-hero.addEventListener('pointerleave',()=>{hero.classList.remove('on');hero.style.setProperty('--rx','0deg');hero.style.setProperty('--ry','0deg');A.forEach((_,i)=>set(i,0));cur.style.opacity=''});
+let bt=0;hero.addEventListener('pointerdown',()=>{lens.classList.add('boom');clearTimeout(bt);bt=setTimeout(()=>lens.classList.remove('boom'),900)});
+hero.addEventListener('pointerleave',()=>{hero.classList.remove('on');lens.classList.remove('boom');hero.style.setProperty('--rx','0deg');hero.style.setProperty('--ry','0deg');A.forEach((_,i)=>set(i,0));cur.style.opacity=''});
 addEventListener('scroll',()=>{if(hero.classList.contains('on'))centers()},{passive:true});addEventListener('resize',centers)}
 </script>
 </body>
